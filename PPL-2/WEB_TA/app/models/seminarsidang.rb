@@ -1,0 +1,2 @@
+class Seminarsidang < ApplicationRecord
+end

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- meta charec set -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Page Title -->
+    <title>Minutes Of Meeting</title>
+    <!-- Meta Description -->
+    <meta name="description" content="Tugas Akhir dan Kerja Praktek ITB">
+    <meta name="keywords" content="TA, TA I, TA II, TA 1, TA 2, Tugas Akhir, Bimbingan TA, MOM, Minutes Of Meeting ITB, Institut Teknologi Bandung">
+    <meta name="author" content="Praditya Raudi">
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/ajukan-topik.css"><!-- Mobile Specific Meta -->
+
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'static-pages', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'minutes_of_meeting', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'ajukan-topik', media: 'all', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body id="body">
+    <!-- Fixed Navigation -->
+    <header id="navigation" class="navbar-fixed-top navbar">
+      <div class="container">
+        <div class="navbar-header">
+
+          <!-- logo -->
+          <a class="navbar-brand" href="#body">
+            <h1 id="logo">
+              <img src="../img/Logo-ITB.png" height="50" width="50" alt="itb">
+            </h1>
+          </a>
+          <!-- /logo -->
+        </div>
+
+        <!-- main nav -->
+        <nav class=" navbar-right" role="navigation">
+          <ul id="nav" class="nav navbar-nav">
+            <li><a href="/">TOPIK</a>
+            <li><a href="#status">STATUS</a></li>
+            <li><a class="current" href="#bimbingan">BIMBINGAN</a></li>
+            <li><a href="#logout">LOGOUT</a></li>
+          </ul>
+        </nav>
+        <!-- /main nav -->
+      </div>
+    </header>
+
+    <h1> MINUTES OF MEETING </h1>
+
+    <label class='label-form'>NAMA PEMBIMBING</label>
+    <input id="input-topik1" placeholder="Masukan Nama Pembimbing" class="input-text" type="text">
+
+
+    <label class='label-form'>TANGGAL</label>
+    <div class=" input-append date form_datetime" data-date="2017-01-01T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+      <input class="input-tanggal" type="text" value="" readonly>
+      <span class="add-on"><img class="icon-remove" src="../img/Reset.png" width="23px" style=""></span>
+      <span class="add-on"><img class="icon-th" src="../img/Calendar-Time.png" width="23px"></span>
+    </div>
+    <input type="hidden" id="dtp_input1" value="" />
+
+    <label class='label-form'>HASIL DAN DISKUSI</label>
+    <textarea rows="8" cols="50">
+    </textarea>
+
+    <label class='label-form'>RENCANA TINDAK LANJUT</label>
+    <textarea rows="8" cols="50">
+    </textarea>
+
+    <label class='label-form'>RENCANA WAKTU BIMBINGAN SELANJUTNYA</label>
+    <div class=" input-append date form_datetime" data-date="2017-01-01T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+      <input class="input-tanggal" type="text" value="" readonly>
+      <span class="add-on"><img class="icon-remove" src="../img/Reset.png" width="23px" style=""></span>
+      <span class="add-on"><img class="icon-th" src="../img/Calendar-Time.png" width="23px"></span>
+    </div>
+    <input type="hidden" id="dtp_input1" value="" />
+
+    <button type="submit" class="button-submit-mom">
+      SUBMIT
+    </button>
+    <button class="button-cancel-mom">
+      CANCEL
+    </button>
+    <%= javascript_include_tag 'jquery-183', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'minutes_of_meeting', 'data-turbolinks-track': 'reload' %>
+    <script type="text/javascript">
+      $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+      });
+      $('.form_date').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+      });
+      $('.form_time').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+      });
+    </script>
+  </body>
+</html>

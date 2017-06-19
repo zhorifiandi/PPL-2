@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- meta charec set -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Page Title -->
+    <title>Ajukan Topik TA</title>
+    <!-- Meta Description -->
+    <meta name="description" content="Tugas Akhir dan Kerja Praktek ITB">
+    <meta name="keywords" content="TA, TA I, TA II, TA 1, TA 2, Tugas Akhir, Ajukan Topik TA, ITB, Institut Teknologi Bandung">
+    <meta name="author" content="Praditya Raudi">
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'static-pages', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'ajukan-topik', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+
+  <body id="body">
+    <!-- Fixed Navigation -->
+    <header id="navigation" class="navbar-fixed-top navbar">
+      <div class="container">
+        <div class="navbar-header">
+
+          <!-- logo -->
+          <a class="navbar-brand" href="#body">
+            <h1 id="logo">
+              <img src="img/Logo-ITB.png" height="50" width="50" alt="itb">
+            </h1>
+          </a>
+          <!-- /logo -->
+        </div>
+
+        <!-- main nav -->
+        <nav class=" navbar-collapse navbar-right" role="navigation">
+          <ul id="nav" class="nav navbar-nav">
+            <li><a class="current" href="#topik">TOPIK</a></li>
+            <li><a href="#status">STATUS</a></li>
+            <li><a href="/static_pages/minutes_of_meeting">BIMBINGAN</a></li>
+            <li><a href="#logout">LOGOUT</a></li>
+          </ul>
+        </nav>
+        <!-- /main nav -->
+      </div>
+    </header>
+
+    <h1> AJUKAN TOPIK sadnlasnd</h1>
+
+    <h2> PILIHAN SATU </h2>
+    <input id="pilihTopik1" class="input-radio" type="radio" name="topik1" value="topikDosen1" checked>
+    <label for="pilihTopik1" class="label-radio">Pilih Topik Dosen</label>
+
+    <input id="inputTopik1" class="input-radio-2" type="radio" name="topik1" value="topikSendiri1">
+    <label for="inputTopik1" class="label-radio">Masukkan Topik Mahasiswa</label>
+
+    <label class='label-form'>JUDUL TOPIK</label>
+    <div id="pilih-topik1">
+      <label id='choose-topik1' for='options-topik1'>Pilih Topik</label>
+      <br clear='all' />
+      <select id='options-topik1' size="10" style='display:none;'>
+        <option>Topik 1 awdaodjqsodjshdoqsjdisdjhiqakwndoadnaowdnwaidjbawidbawdibsdhbwiahbdaibdiasbdsaid</option>
+        <option>Topik 2</option>
+        <option>Topik 3</option>
+        <option>Topik 4</option>
+        <option>Topik 5</option>
+        <option>Topik 6</option>
+        <option>Topik 7</option>
+        <option>Topik 8</option>
+        <option>Topik 9</option>
+        <option>Topik 10</option>
+      </select>
+    </div>
+
+    <input id="input-topik1" placeholder="Masukan Judul Topik" class="input-text" type="text">
+
+
+    <label class='label-form'>KATEGORI</label>
+    <label id='choose-kategori1' for='options-kategori1'>Pilih Kategori</label>
+    <br clear='all' />
+    <select id='options-kategori1' size="5" style='display:none;'>
+      <option>Kategori 1</option>
+      <option>Kategori 2</option>
+      <option>Kategori 3</option>
+      <option>Kategori 4</option>
+      <option>Kategori 5</option>
+    </select>
+
+
+    <label class='label-form'>DOSEN PEMBIMBING</label>
+    <label id='choose-dosen1' for='options-dosen1'>Pilih Dosen</label>
+    <br clear='all' />
+    <select id='options-dosen1' size="3" style='display:none;'>
+      <option>Dosen 1</option>
+      <option>Dosen 2</option>
+      <option>Dosen 3</option>
+    </select>
+
+
+    <h2> PILIHAN DUA </h2>
+    <input id="pilihTopik2" class="input-radio" type="radio" name="topik2" value="topikDosen2" checked>
+    <label for="pilihTopik2" class="label-radio">Pilih Topik Dosen</label>
+
+    <input id="inputTopik2" class="input-radio-2" type="radio" name="topik2" value="topikSendiri2">
+    <label for="inputTopik2" class="label-radio">Masukkan Topik Mahasiswa</label>
+
+    <label class='label-form'>JUDUL TOPIK</label>
+    <div id="pilih-topik2">
+      <label id='choose-topik2' for='options-topik2'>Pilih Topik</label>
+      <br clear='all' />
+      <select id='options-topik2' size="10" style='display:none;'>
+        <option>Topik 1 awdaodjqsodjshdoqsjdisdjhiqakwndoadnaowdnwaidjbawidbawdibsdhbwiahbdaibdiasbdsaid</option>
+        <option>Topik 2</option>
+        <option>Topik 3</option>
+        <option>Topik 4</option>
+        <option>Topik 5</option>
+        <option>Topik 6</option>
+        <option>Topik 7</option>
+        <option>Topik 8</option>
+        <option>Topik 9</option>
+        <option>Topik 10</option>
+      </select>
+    </div>
+
+    <input id="input-topik2" placeholder="Masukan Judul Topik" class="input-text" type="text">
+
+
+    <label class='label-form'>KATEGORI</label>
+    <label id='choose-kategori2' for='options-kategori2'>Pilih Kategori</label>
+    <br clear='all' />
+    <select id='options-kategori2' size="5" style='display:none;'>
+      <option>Kategori 1</option>
+      <option>Kategori 2</option>
+      <option>Kategori 3</option>
+      <option>Kategori 4</option>
+      <option>Kategori 5</option>
+    </select>
+
+
+    <label class='label-form'>DOSEN PEMBIMBING</label>
+    <label id='choose-dosen2' for='options-dosen2'>Pilih Dosen</label>
+    <br clear='all' />
+    <select id='options-dosen2' size="3" style='display:none;'>
+      <option>Dosen 1</option>
+      <option>Dosen 2</option>
+      <option>Dosen 3</option>
+    </select>
+
+
+    <h2> PILIHAN TIGA </h2>
+    <input id="pilihTopik3" class="input-radio" type="radio" name="topik3" value="topikDosen3" checked>
+    <label for="pilihTopik3" class="label-radio">Pilih Topik Dosen</label>
+
+    <input id="inputTopik3" class="input-radio-2" type="radio" name="topik3" value="topikSendiri3">
+    <label for="inputTopik3" class="label-radio">Masukkan Topik Mahasiswa</label>
+
+    <label class='label-form'>JUDUL TOPIK</label>
+    <div id="pilih-topik3">
+      <label id='choose-topik3' for='options-topik3'>Pilih Topik</label>
+      <br clear='all' />
+      <select id='options-topik3' size="10" style='display:none;'>
+        <option>Topik 1 awdaodjqsodjshdoqsjdisdjhiqakwndoadnaowdnwaidjbawidbawdibsdhbwiahbdaibdiasbdsaid</option>
+        <option>Topik 2</option>
+        <option>Topik 3</option>
+        <option>Topik 4</option>
+        <option>Topik 5</option>
+        <option>Topik 6</option>
+        <option>Topik 7</option>
+        <option>Topik 8</option>
+        <option>Topik 9</option>
+        <option>Topik 10</option>
+      </select>
+    </div>
+
+    <input id="input-topik3" placeholder="Masukan Judul Topik" class="input-text" type="text">
+
+
+    <label class='label-form'>KATEGORI</label>
+    <label id='choose-kategori3' for='options-kategori3'>Pilih Kategori</label>
+    <br clear='all' />
+    <select id='options-kategori3' size="5" style='display:none;'>
+      <option>Kategori 1</option>
+      <option>Kategori 2</option>
+      <option>Kategori 3</option>
+      <option>Kategori 4</option>
+      <option>Kategori 5</option>
+    </select>
+
+
+    <label class='label-form'>DOSEN PEMBIMBING</label>
+    <label id='choose-dosen3' for='options-dosen3'>Pilih Dosen</label>
+    <br clear='all' />
+    <select id='options-dosen3' size="3" style='display:none;'>
+      <option>Dosen 1</option>
+      <option>Dosen 2</option>
+      <option>Dosen 3</option>
+    </select>
+
+
+    <button type="submit" class="button-submit">
+      SUBMIT
+    </button>
+    <%= javascript_include_tag 'ajukan-topik', 'data-turbolinks-track': 'reload' %>
+    
+  </body>
+</html>

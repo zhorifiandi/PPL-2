@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- meta charec set -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Page Title -->
+    <title>Ajukan Topik TA</title>
+    <!-- Meta Description -->
+    <meta name="description" content="Tugas Akhir dan Kerja Praktek ITB">
+    <meta name="keywords" content="TA, TA I, TA II, TA 1, TA 2, Tugas Akhir, Ajukan Topik TA, ITB, Institut Teknologi Bandung">
+    <meta name="author" content="Praditya Raudi & Ari Pratama Zhorifiandi & Geraldi Dzakwan">
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tags %>
+
+    <link href="/style/static_pages.css" rel="stylesheet" type="text/css">
+    <link href="/style/dosen-ajukan-topik.css" rel="stylesheet" type="text/css">
+    <link href="/style/ajukan-topik.css" rel="stylesheet" type="text/css">
+    <script src="/script/static-pages.js" type="text/javascript"></script>
+    <script src="/script/jquery.js" type="text/javascript"></script>
+    <script src="/script/mahasiswa-ajukan-topik.js" type="text/javascript"></script>
+    <script src="/script/ajukan-topik.js" type="text/javascript"></script>
+  </head>
+
+  <% if logged_in? %>
+    <%
+    if current_user.role == 'mahasiswa'
+
+    elsif  current_user.role == 'dosen'
+      controller.redirect_to controller: 'dosen_pembimbing', action: 'bimbingan'
+    elsif current_user.role == 'tu'
+      controller.redirect_to controller: 'tu', action: 'tu_lihat_user'
+    else
+      controller.redirect_to controller: 'admin', action: 'lihat_user'
+    %>
+  <% end %>
+  <% else %>
+    <% controller.redirect_to controller: 'sessions', action: 'new' %>
+  <% end %>
+
+  <body id="body" onload="fetchTopicsAll()">
+    <!-- Fixed Navigation -->
+    <header id="navigation" class="navbar-fixed-top navbar">
+      <div class="container">
+        <div class="navbar-header">
+
+          <!-- logo -->
+          <a class="navbar-brand" href="#body">
+            <h1 id="logo">
+              <img src="/img/Logo-ITB.png" height="50" width="50" alt="itb">
+            </h1>
+          </a>
+          <!-- /logo -->
+        </div>
+
+        <!-- main nav -->
+        <nav class=" navbar-collapse navbar-right" role="navigation">
+          <ul id="nav" class="nav navbar-nav">
+            <li><a href="/mahasiswa">PILIH MODE</a></li>
+            <li><a class="current">TOPIK</a></li>
+            <li><a href="status_mahasiswa">STATUS</a></li>
+            <li><a href="bimbingan">BIMBINGAN</a></li>
+            <li><a href="/logout">LOGOUT</a></li>
+          </ul>
+        </nav>
+        <!-- /main nav -->
+      </div>
+    </header>
+
+    <%= form_tag("/mahasiswa/save_topik", method: "post") do %>
+    <% mhs = Mahasiswa.find_by(nim: current_user.username)%>
+    <% if mhs != nil %>
+    <h2 style="margin-top: 100px; margin-bottom: 0">Halo, <%= mhs.name %> </h2>
+    <% end %>
+    <% if @assignment %>
+      <h1 style="margin-top: 10px;">MAAF,</h1>
+      <label class='label-form' style="margin-top: -30px; margin-bottom: 350px;">Anda sudah mendapatkan Dosen Pembimbing </label>
+    <% else %>
+      <h1 style="margin-top: 0;"> AJUKAN TOPIK </h1>
+
+          <h2> PILIHAN SATU </h2>
+          <input id="pilihTopik1" class="input-radio" type="radio" name="topik1" value="topikDosen1" checked>
+          <label for="pilihTopik1" class="label-radio">Pilih Topik Dosen</label>
+
+          <input id="inputTopik1" class="input-radio-2" type="radio" name="topik1" value="topikSendiri1">
+          <label for="inputTopik1" class="label-radio">Masukkan Topik Mahasiswa</label>
+
+          <input id="inputTopik1" class="input-radio-2" type="radio" name="topik1" value="topikKosong1">
+          <label for="inputTopik1" class="label-radio">Tidak Memilih Topik</label>
+
+          <label class='label-form'>DOSEN PEMBIMBING</label>
+          <select id='options-dosen1' name='options-dosen1' onchange='fetchTopics(this);'>
+            <%if(@dosbingList!=nil) %>
+              <%@dosbingList.each do |elem| %>
+                <option><%=elem.nip%> / <%=elem.nama%></option>
+              <%end%>
+            <%end%>
+          </select>
+          <br>
+          <br>
+
+          <label class='label-form'>KATEGORI</label>
+          <select id='options-kategori1' name='options-kategori1' onchange='fetchTopics(this);'>
+            <%if(@kategoriList!=nil) %>
+              <%@kategoriList.each do |elem| %>
+                <option><%=elem.nama%></option>
+              <%end%>
+            <%end%>
+          </select>
+          <br>
+          <br>
+
+          <div id="pilih-topik1">
+            <label class='label-form'>JUDUL TOPIK</label>
+            <select id='options-topik1' name='options-topik1'>
+              <!-- Ntar ini pake js/ajax -->
+            </select>
+            <br clear='all' />
+          </div>
+
+          <div id="input-topik1">
+            <label class='label-form'>JUDUL TOPIK</label>
+            <input name="input-topik1" placeholder="Masukan Judul Topik" class="input-text" type="text">
+            <br clear='all' />
+          </div>
+
+          <h2> PILIHAN DUA </h2>
+          <input id="pilihTopik2" class="input-radio" type="radio" name="topik2" value="topikDosen2" checked>
+          <label for="pilihTopik2" class="label-radio">Pilih Topik Dosen</label>
+
+          <input id="inputTopik2" class="input-radio-2" type="radio" name="topik2" value="topikSendiri2">
+          <label for="inputTopik2" class="label-radio">Masukkan Topik Mahasiswa</label>
+
+          <input id="inputTopik2" class="input-radio-2" type="radio" name="topik2" value="topikKosong2">
+          <label for="inputTopik2" class="label-radio">Tidak Memilih Topik</label>
+
+          <label class='label-form'>DOSEN PEMBIMBING</label>
+          <!--<label id='choose-dosen2' for='options-dosen2'>Pilih Dosen</label>-->
+          <br clear='all' />
+          <select id='options-dosen2' name='options-dosen2' onchange='fetchTopics(this);'>
+            <%if(@dosbingList!=nil) %>
+              <%@dosbingList.each do |elem| %>
+                <option><%=elem.nip%> / <%=elem.nama%></option>
+            <%end%>
+            <%end%>
+          </select>
+          <br>
+          <br>
+
+          <label class='label-form'>KATEGORI</label>
+          <!--<label id='choose-kategori2' for='options-kategori2'>Pilih Kategori</label>-->
+          <br clear='all' />
+          <select id='options-kategori2' name='options-kategori2' onchange='fetchTopics(this);'>
+            <%if(@kategoriList!=nil) %>
+              <%@kategoriList.each do |elem| %>
+                <option><%=elem.nama%></option>
+              <%end%>
+            <%end%>
+          </select>
+          <br>
+          <br>
+
+          <div id="pilih-topik2">
+            <label class='label-form'>JUDUL TOPIK</label>
+            <!--<label id='choose-topik2' for='options-topik2'>Pilih Topik</label>-->
+            <select id='options-topik2' name='options-topik2'>
+              <!-- Ntar ini pake js/ajax -->
+            </select>
+            <br clear='all' />
+          </div>
+
+          <div id="input-topik2">
+            <label class='label-form'>JUDUL TOPIK</label>
+            <input name="input-topik2" placeholder="Masukan Judul Topik" class="input-text" type="text">
+            <br clear='all' />
+          </div>
+
+          <h2> PILIHAN TIGA </h2>
+          <input id="pilihTopik3" class="input-radio" type="radio" name="topik3" value="topikDosen3" checked>
+          <label for="pilihTopik3" class="label-radio">Pilih Topik Dosen</label>
+
+          <input id="inputTopik3" class="input-radio-2" type="radio" name="topik3" value="topikSendiri3">
+          <label for="inputTopik3" class="label-radio">Masukkan Topik Mahasiswa</label>
+
+          <input id="inputTopik3" class="input-radio-2" type="radio" name="topik3" value="topikKosong3">
+          <label for="inputTopik3" class="label-radio">Tidak Memilih Topik</label>
+
+          <label class='label-form'>DOSEN PEMBIMBING</label>
+          <!--<label id='choose-dosen3' for='options-dosen3'>Pilih Dosen</label>-->
+          <br clear='all' />
+          <select id='options-dosen3' name='options-dosen3' onchange='fetchTopics(this);'>
+            <%if(@dosbingList!=nil) %>
+              <%@dosbingList.each do |elem| %>
+                <option><%=elem.nip%> / <%=elem.nama%></option>
+              <%end%>
+            <%end%>
+          </select>
+          <br>
+          <br>
+
+          <label class='label-form'>KATEGORI</label>
+          <br clear='all' />
+          <!--<label id='choose-kategori3' for='options-kategori3'>Pilih Kategori</label>-->
+          <select id='options-kategori3' name='options-kategori3' onchange='fetchTopics(this);'>
+            <%if(@kategoriList!=nil) %>
+              <%@kategoriList.each do |elem| %>
+                <option><%=elem.nama%></option>
+              <%end%>
+            <%end%>
+          </select>
+          <br>
+          <br>
+          <div id="pilih-topik3">
+            <!--<label id='choose-topik3' for='options-topik3'>Pilih Topik</label>-->
+            <label class='label-form'>JUDUL TOPIK</label>
+            <br clear='all' />
+            <select id='options-topik3' name='options-topik3'>
+
+            </select>
+          </div>
+
+          <div id="input-topik3">
+            <label class='label-form'>JUDUL TOPIK</label>
+            <br clear='all' />
+            <input name="input-topik3" placeholder="Masukan Judul Topik" class="input-text" type="text">
+          </div>
+          <!--<button type="submit" class="button-submit">
+            SUBMIT
+          </button>-->
+          <br>
+          <br>
+          <br>
+          <center>
+            <%= submit_tag("KIRIM", :class => "button-ajukan") %>
+          </center>
+    <%end%>
+  <% end %>
+  <footer>
+    <p>
+      ©2016 Informatics | School of Electrical Engineering & Informatics (SEEI) | Institut Teknologi Bandung
+    </p>
+  </footer>
+  </body>
+</html>

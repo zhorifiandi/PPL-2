@@ -1,0 +1,269 @@
+@font-face {
+    font-family: 'ProximaNovaRegular';
+    src: url('/assets/Proxima Nova Regular.woff');
+}
+
+@font-face {
+    font-family: 'ProximaNovaBold';
+    src: url('/assets/Proxima Nova Bold.woff');
+}
+
+body {
+  font-family: 'ProximaNovaRegular';
+  background-color: #E5E5E5;
+}
+
+h1 {
+	font-family: 'ProximaNovaBold';
+	margin-top: 100px;
+	color: #284f27;
+	font-size: 56px;
+	margin-left: 25%;
+}
+
+h2 {
+	font-family: 'ProximaNovaBold';
+	margin-top: 50px;
+	color: #284f27;
+	margin-left: 25%;
+}
+
+.label-form {
+	margin-left: 25%;
+	margin-top: 25px;
+	font-size: 18px;
+	display: block;
+	color: #284f27;
+}
+
+.label-form-approval {
+	margin-left: 25%;
+	margin-top: 25px;
+	font-size: 18px;
+	display: inline-block;
+	color: #284f27;
+}
+
+#choose-topik1, #choose-kategori1, #choose-dosen1, #choose-topik2, #choose-kategori2, #choose-dosen2,
+#choose-topik3, #choose-kategori3, #choose-dosen3  {
+	margin-left: 25%;
+    background-color: #284f27;
+    padding:10px 0px 10px 10px;
+    display:inline-block;
+    color: #fff;
+    font-size:18px;
+    width:50%;
+}
+
+#choose-topik1:hover, #choose-kategori1:hover, #choose-dosen1:hover, #choose-topik2:hover, #choose-kategori2:hover, #choose-dosen2:hover,
+#choose-topik3:hover, #choose-kategori3:hover, #choose-dosen3:hover {
+	cursor: pointer;
+}
+
+select {
+	position: absolute;
+	background-color: #d9d9d9;
+    color: #284f27;
+    border: 1px solid;
+    border-radius: 3pt;
+    padding:10px 0px 12px 10px;
+    font-size: 17pt;
+    max-height: 250px;
+    width: 50%;
+    margin-bottom: 100px;
+}
+
+option {
+	color:#fff;
+	padding:10px 0px 10px 10px;
+    font-size:15px;
+}
+
+.hover, .current {
+	cursor: pointer;
+    background-color:#2f702e;
+    color:white;
+}
+
+.input-text {
+	position: relative;
+	margin-left: 25%;
+    background-color: #d9d9d9;//#284f27;
+    padding:10px 0px 12px 10px;
+    display:inline-block;
+    color: #284f27;
+    border: 1px solid;
+    border-radius: 3pt;
+    font-size:17px;
+    width:50%;
+}
+
+.input-radio {
+	display: inline-block;
+	margin-left: 25%;
+	width:24px;
+	height:24px;
+	position:relative;
+	top:6px;
+}
+
+.input-radio-2 {
+	display: inline-block;
+	width:24px;
+	height:24px;
+	position:relative;
+	top:6px;
+}
+
+.label-radio {
+	color: #284f27;
+}
+
+.button-submit {
+	position: relative;
+	background-color: #284f27;
+	color: #fff;
+	width: 20%;
+    font-size: 20px;
+    border: 0;
+    padding:10px 0px 10px 0px;
+    left: 55%;
+    margin-top: 50px;
+	margin-bottom: 100px;
+}
+
+.button-cancel-mom {
+	position: relative;
+	background-color: #284f27;
+	color: #fff;
+	width: 20%;
+    font-size: 20px;
+    display: block;
+    border: 0;
+    padding:10px 0px 10px 0px;
+    left: 55%;
+    margin-top: 10px;
+	margin-bottom: 100px;
+}
+
+.button-submit-mom {
+	position: relative;
+	background-color: #284f27;
+	color: #fff;
+	width: 20%;
+  cursor: pointer;
+    font-size: 20px;
+    display: inline-block;
+    border: 0;
+    padding:10px 0px 10px 0px;
+    left: 55%;
+    margin-top: 50px;
+}
+
+.button-edit-mom {
+	position: relative;
+	background-color: #284f27;
+	color: #fff;
+	width: 20%;
+  cursor: pointer;
+  text-align: center;
+    font-size: 20px;
+    display: inline-block;
+    border: 0;
+    padding:10px 0px 10px 0px;
+    left: 35%;
+    margin-top: 50px;
+}
+
+.button-edit-mom-approval {
+	position: relative;
+	background-color: #284f27;
+	color: #fff;
+	width: 10%;
+  cursor: pointer;
+  text-align: center;
+    font-size: 15px;
+    display: inline-block;
+    border: 0;
+    padding:10px 0px 10px 0px;
+    left: 7%;
+    margin-top: 50px;
+}
+
+.button-edit-mom:hover {
+  color: #fff;
+}
+
+.button-submit {
+	position: relative;
+	background-color: #284f27;
+	color: #fff;
+	width: 20%;
+  font-size: 20px;
+  display: block;
+  border: 0;
+  padding:10px 0px 10px 0px;
+  left: 55%;
+  margin-top: 50px;
+	margin-bottom: 100px;
+}
+
+.button-ajukan {
+	position: relative;
+	background-color: #284f27;
+	color: #fff;
+	width: 20%;
+  font-size: 20px;
+  display: block;
+  border: 0;
+  padding:10px 0px 10px 0px;
+  margin-top: 50px;
+	margin-bottom: 100px;
+}
+
+.button-tambah {
+	position: relative;
+  cursor: pointer;
+	background-color: #284f27;
+	color: #fff;
+	width: 50%;
+  font-size: 20px;
+  display: block;
+  border: 0;
+  left: 0%;
+  padding:10px 0px 10px 0px;
+  margin-top: 50px;
+	margin-bottom: 100px;
+}
+
+textarea {
+	position: relative;
+	margin-left: 25%;
+    background-color: #d9d9d9;
+    padding:10px 0px 12px 10px;
+    display:inline-block;
+    color: #284f27;
+    font-size:17px;
+    width:50%;
+    border: 1px solid;
+    border-radius: 3pt;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: #fff;
+    font-size: 18px;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: #fff;
+   opacity: 1;
+   font-size: 18px;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: #fff;
+   opacity: 1;
+   font-size: 18px;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: #fff;
+   font-size: 18px;
+}

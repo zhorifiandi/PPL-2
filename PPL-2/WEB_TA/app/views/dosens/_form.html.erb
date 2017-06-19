@@ -1,0 +1,47 @@
+<%= form_for(dosen) do |f| %>
+  <% if dosen.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(dosen.errors.count, "error") %> prohibited this dosen from being saved:</h2>
+
+      <ul>
+      <% dosen.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nama %>
+    <%= f.text_field :nama %>
+  </div>
+
+  <div class="field">
+    <%= f.label :nip %>
+    <%= f.text_field :nip %>
+  </div>
+
+  <div class="field">
+    <%= f.label :lab %>
+    <%= f.text_field :lab %>
+  </div>
+
+  <div class="field">
+    <%= f.label :dosenta %>
+    <%= f.text_field :dosenta %>
+  </div>
+
+  <div class="field">
+    <%= f.label :dosenpembimbing %>
+    <%= f.text_field :dosenpembimbing %>
+  </div>
+
+  <div class="field">
+    <%= f.label :dosenpenguji %>
+    <%= f.text_field :dosenpenguji %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

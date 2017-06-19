@@ -1,0 +1,2 @@
+class Kategori < ApplicationRecord
+end

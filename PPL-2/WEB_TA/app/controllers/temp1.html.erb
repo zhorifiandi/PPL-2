@@ -1,0 +1,34 @@
+<label class='label-form'>DOSEN PEMBIMBING</label>
+<br clear='all' />
+<!--<label id='choose-dosen1' for='options-dosen1'>Pilih Dosen</label>-->
+<select id='options-dosen1'>
+  <%if(@dosbingList!=nil) %>
+    <%@dosbingList.each do |elem| %>
+      <option><%=elem.name%></option>
+    <%end%>
+  <%end%>
+</select>
+<br>
+<br>
+
+<label class='label-form'>KATEGORI</label>
+<br clear='all' />
+<!--<label id='choose-kategori1' for='options-kategori1'>Pilih Kategori</label>-->
+<select id='options-kategori1' value="Pilih Kategori">
+  <%if(@kategoriList!=nil) %>
+    <%@kategoriList.each do |elem| %>
+      <option><%=elem.nama%></option>
+    <%end%>
+  <%end%>
+</select>
+<br>
+<br>
+
+<label class='label-form'>JUDUL TOPIK</label>
+<div id="pilih-topik1">
+  <!--<label id='choose-topik1' for='options-topik1'>Pilih Topik</label>-->
+  <br clear='all' />
+  <select id='options-topik1'>
+    <!-- Ntar ini pake js/ajax -->
+  </select>
+</div>

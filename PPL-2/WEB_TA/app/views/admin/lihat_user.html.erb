@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<%= logger.info("HELLO NIGHT") %>
+<html>
+  <head>
+    <!-- meta charec set -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Page Title -->
+    <title>Lihat Daftar User</title>
+    <!-- Meta Description -->
+    <meta name="description" content="Tugas Akhir dan Kerja Praktek ITB">
+    <meta name="keywords" content="TA, TA I, TA II, TA 1, TA 2, Tugas Akhir, Ajukan Topik TA, ITB, Institut Teknologi Bandung">
+    <meta name="author" content="Praditya Raudi">
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tags %>
+
+    <link href="/style/static_pages.css" rel="stylesheet" type="text/css">
+    <link href="/style/dosen-ajukan-topik.css" rel="stylesheet" type="text/css">
+    <link href="/style/tu_daftar_user.css" rel="stylesheet" type="text/css">
+    <link href="/style/dosen_nilai_seminar.css" rel="stylesheet" type="text/css">
+    <script src="/script/static-pages.js" type="text/javascript"></script>
+    <script src="/script/jquery.js" type="text/javascript"></script>
+    <script src="/script/admin_lihat_user.js" type="text/javascript"></script>
+
+  </head>
+  <body id="body">
+    <!-- Fixed Navigation -->
+    <header id="navigation" class="navbar-fixed-top navbar">
+      <div class="container">
+        <div class="navbar-header">
+          <!-- responsive nav button -->
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <i class="fa fa-bars fa-2x"></i>
+          </button>
+          <!-- /responsive nav button -->
+
+          <!-- logo -->
+          <a class="navbar-brand" href="#body">
+            <h1 id="logo">
+              <img src="/img/Logo-ITB.png" height="50" width="50" alt="itb">
+            </h1>
+          </a>
+          <!-- /logo -->
+        </div>
+
+        <!-- main nav -->
+        <nav class="collapse navbar-collapse navbar-right" role="navigation">
+          <ul id="nav" class="nav navbar-nav">
+            <li><%= link_to "REGISTRASI USER", "/admin/registrasi_user"%></li>
+            <li><%= link_to "LIHAT USER", "/admin/lihat_user" , :class => "current" %></li>
+            <li><a href="/logout">LOGOUT</a></li>
+          </ul>
+        </nav>
+        <!-- /main nav -->
+      </div>
+    </header>
+
+    <% dosen = Admin.find_by(nip: current_user.username)%>
+    <% if dosen != nil %>
+    <h2 style="margin-bottom: 0">Halo, <%= dosen.nama %> </h2>
+    <% end %>
+    <h1 style="margin-top: 0;"> LIST DAFTAR USER </h1>
+
+	<% success = params[:success] %>
+  <% nama = params[:nama] %>
+  <% nip = params[:nip] %>
+	<% if (success != nil) %>
+		 <% if (success == '1')%>
+			<div class='success'> Update dengan data user : <br>
+        Nama : <%= nama %> <br>
+        No Induk : <%= nip %> <br>
+        telah berhasil! </div>
+		 <% elsif (success == '0') %>
+			<div class='fail'> Update dengan data user : <br>
+        Nama : <%= nama %> <br>
+        No Induk : <%= nip %> <br>
+        telah gagal! </div>
+		 <% elsif (success == '2') %>
+			<div class='success'> Penghapusan data user : <br>
+        Nama : <%= nama %> <br>
+        No Induk : <%= nip %> <br>
+        telah berhasil! </div>
+		 <% elsif (success == '3') %>
+			<div class='fail'> Penghapusan data user : <br>
+        Nama : <%= nama %> <br>
+        No Induk : <%= nip %> <br>
+        telah gagal! </div>
+		 <% end %>
+	<% end %>
+
+	<%= form_tag("/admin/lihat_user", method: "get") do %>
+      <input name="search" id="search" placeholder="" class="input-search" type="text" value="<%= @search %>">
+      <%= submit_tag("SEARCH", :class => "button-search") %>
+    <% end %>
+
+	<input id="listMahasiswa" class="input-radio" type="radio" name="list" value="listMahasiswa" checked>
+  <label for="listMahasiswa" class="label-radio">List Mahasiswa</label>
+
+  <input id="listDosen" class="input-radio-2" type="radio" name="list" value="listDosen">
+  <label for="listDosen" class="label-radio">List Dosen</label>
+
+  <input id="listTU" class="input-radio-2" type="radio" name="list" value="listTU">
+  <label for="listTU" class="label-radio">List TU</label>
+
+  <input id="listAdmin" class="input-radio-2" type="radio" name="list" value="listAdmin">
+  <label for="listAdmin" class="label-radio">List Admin</label>
+  <br><br><br>
+	<div id='listDataMahasiswa' name="" style='display:block'>
+	  <table>
+        <tr>
+          <th>NIM</th>
+          <th>Nama Mahasiswa</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <%if defined?(:mahasiswa)%>
+      	  <%if(@mahasiswa!=nil) %>
+      	    <% @mahasiswa.each do |mhsiswa| %>
+      	  	    <tr id=<%= mhsiswa.nim %> >
+			      <td><%= mhsiswa.nim %></td>
+			      <td><%= mhsiswa.name %></td>
+			      <td onclick="showDataMahasiswa(<%= mhsiswa.nim %>)" data-remote="true" class='clickable-row'>Edit</td>
+			      <%= form_tag("/admin/delete_mahasiswa", method: "post", onsubmit: "return confirm('Do you really want to delete this user?');") do %>
+ 					      <input name="deleteNim" id="deleteNim" type="hidden" value="<%= mhsiswa.nim %>">
+ 					      <td class='clickable-row'><%= submit_tag("Delete", :class => "button-delete") %></td>
+			      <% end %>
+			    </tr>
+		    <% end %>
+		  <% end %>
+	    <% end %>
+      </table>
+    </div>
+
+    <div id='listDataDosen' name="" style='display:block'>
+	  <table>
+        <tr>
+          <th>NIP</th>
+          <th>Nama Dosen</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <%if defined?(:dosen)%>
+      	  <%if(@dosen!=nil) %>
+      	    <% @dosen.each do |dsn| %>
+      	  	    <tr id=<%= dsn.nip %> >
+			      <td><%= dsn.nip %></td>
+			      <td><%= dsn.nama %></td>
+			      <td onclick="showDataDosen(<%= dsn.nip %>)" data-remote="true" class='clickable-row'>Edit</td>
+			      <%= form_tag("/admin/delete_dosen", method: "post", onsubmit: "return confirm('Do you really want to delete this user?');") do %>
+ 					<input name="deleteNip" id="deleteNip" type="hidden" value="<%= dsn.nip %>">
+ 					<td class='clickable-row'><%= submit_tag("Delete", :class => "button-delete") %></td>
+			      <% end %>
+			    </tr>
+		    <% end %>
+		  <% end %>
+	    <% end %>
+      </table>
+    </div>
+
+	<div id='listDataTU' name="" style='display:block'>
+	  <table>
+        <tr>
+          <th>NIP</th>
+          <th>Nama Tata Usaha</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <%if defined?(:tu)%>
+      	  <%if(@tu!=nil) %>
+      	    <% @tu.each do |tus| %>
+      	  	    <tr id=<%= tus.nip %> >
+			      <td><%= tus.nip %></td>
+			      <td><%= tus.nama %></td>
+			      <td onclick="showDataTU(<%= tus.nip %>)" data-remote="true" class='clickable-row'>Edit</td>
+			      <%= form_tag("/admin/delete_tu", method: "post", onsubmit: "return confirm('Do you really want to delete this user?');") do %>
+ 					  <input name="deleteNipTU" id="deleteNipTU" type="hidden" value="<%= tus.nip %>">
+ 					  <td class='clickable-row'><%= submit_tag("Delete", :class => "button-delete") %></td>
+			      <% end %>
+			    </tr>
+		    <% end %>
+		  <% end %>
+	    <% end %>
+      </table>
+    </div>
+
+    <div id='listDataAdmin' name="" style='display:block'>
+  	  <table>
+          <tr>
+            <th>NIP</th>
+            <th>Nama Admin</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <%if defined?(:admin)%>
+        	  <%if(@admin!=nil) %>
+        	    <% @admin.each do |adm| %>
+        	  	    <tr id=<%= adm.nip %> >
+  			      <td><%= adm.nip %></td>
+  			      <td><%= adm.nama %></td>
+  			      <td onclick="showDataAdmin(<%= adm.nip %>)" data-remote="true" class='clickable-row'>Edit</td>
+              <%= form_tag("/admin/delete_admin", method: "post", onsubmit: "return confirm('Do you really want to delete this user?');") do %>
+   					  <input name="deleteNipAdmin" id="deleteNipAdmin" type="hidden" value="<%= adm.nip %>">
+   					  <td class='clickable-row'><%= submit_tag("Delete", :class => "button-delete") %></td>
+  			      <% end %>
+  			    </tr>
+  		    <% end %>
+  		  <% end %>
+  	    <% end %>
+        </table>
+      </div>
+
+    <div id='editMahasiswa' name="" style='display:none'>
+      <h2> EDIT DATA MAHASISWA </h2>
+	  <%= form_tag("/admin/edit_mahasiswa", method: "post") do %>
+        <label id='judul-form' class='label-form'>Nama Mahasiswa</label>
+      	<br>
+        <input name="nama" id="nama" placeholder="" class="input-text" type="text">
+		<br>
+		<label id='judul-form' class='label-form'>NIM Mahasiswa</label>
+      	<br>
+		<input name="nim" id="nim" placeholder="" class="input-text" type="text">
+		<br>
+		<label id='judul-form' class='label-form'>Password Mahasiswa</label>
+      	<br>
+        <input name="password" id="password" placeholder="" class="input-text" type="text">
+		<br>
+		<label id='judul-form' class='label-form'>Topik Mahasiswa</label>
+      	<br>
+		<input name="topik" id="topik" placeholder="" class="input-text" type="text">
+		<br>
+		<label id='judul-form' class='label-form'>Kategori Topik Mahasiswa</label>
+      	<br>
+		<input name="kategori" id="kategori" placeholder="" class="input-text" type="text">
+		<br>
+		<label id='judul-form' class='label-form'>NIP Dosen Pembimbing 1</label>
+    <br>
+		<input name="nip" id="nip" placeholder="" class="input-text" type="text">
+		<br>
+		<label id='judul-form' class='label-form'>Nama Dosen Pembimbing 1</label>
+    <br>
+  	<input name="dosen" id="dosen" placeholder="" class="input-text" type="text">
+		<br>
+    <label id='judul-form' class='label-form'>NIP Dosen Pembimbing 2</label>
+    <br>
+		<input name="nip2" id="nip2" placeholder="" class="input-text" type="text">
+		<br>
+		<label id='judul-form' class='label-form'>Nama Dosen Pembimbing 2</label>
+    <br>
+  	<input name="dosen2" id="dosen2" placeholder="" class="input-text" type="text">
+		<br>
+    <input name="oldNim" id="oldNim" type="hidden">
+		<input value="CLOSE" type="button" onClick="closeDiv()" class="button-assign">
+		<%= submit_tag("SAVE", :class => "button-assign") %>
+      <% end %>
+    </div>
+
+    <div id='editDosen' name="" style='display:none'>
+      <h2> EDIT DATA DOSEN </h2>
+	  <%= form_tag("/admin/edit_dosen", method: "post") do %>
+        <label id='judul-form' class='label-form'>Nama Dosen</label>
+      	<br>
+        <input name="namaDosen" id="namaDosen" placeholder="" class="input-text" type="text">
+		<br>
+		<label id='judul-form' class='label-form'>NIP Dosen</label>
+      	<br>
+		<input name="nipDosen" id="nipDosen" placeholder="" class="input-text" type="text">
+		<br>
+		<label id='judul-form' class='label-form'>Password Dosen</label>
+      	<br>
+        <input name="passwordDosen" id="passwordDosen" placeholder="" class="input-text" type="text">
+		<br>
+    <label id='judul-form' class='label-form'>Role Dosen</label>
+    <br>
+    <div style="position:relative;left:25%;">
+      <input class="input-checkbox" id="dosenTA" type="checkbox" name="dosenta" value="dosenta"> Dosen Mata Kuliah TA
+      <br>
+      <input class="input-checkbox" id="dosenPembimbing" type="checkbox" name="dosenpembimbing" value="dosenpembimbing"> Dosen Pembimbing
+      <br>
+      <input class="input-checkbox" id="dosenPenguji" type="checkbox" name="dosenpenguji" value="dosenpenguji"> Dosen Penguji
+      <br>
+    </div>
+
+		<input name="oldNipDosen" id="oldNipDosen" type="hidden">
+		<input value="CLOSE" type="button" onClick="closeDiv()" class="button-assign">
+		<%= submit_tag("SAVE", :class => "button-assign") %>
+      <% end %>
+    </div>
+
+    <div id='editTU' name="" style='display:none'>
+      <h2> UBAH DATA KARYAWAN TATA USAHA </h2>
+	  <%= form_tag("/admin/edit_tu", method: "post") do %>
+        <label id='judul-form' class='label-form'>Nama Karyawan Tata Usaha</label>
+      	<br>
+        <input name="namaTU" id="namaTU" placeholder="" class="input-text" type="text">
+		<br>
+		<label id='judul-form' class='label-form'>NIP Karyawan Tata Usaha</label>
+      	<br>
+		<input name="nipTU" id="nipTU" placeholder="" class="input-text" type="text">
+		<br>
+		<label id='judul-form' class='label-form'>Password Karyawan Tata Usaha</label>
+      	<br>
+        <input name="passwordTU" id="passwordTU" placeholder="" class="input-text" type="text">
+		<br>
+		<input name="oldNipTU" id="oldNipTU" type="hidden">
+		<input value="CLOSE" type="button" onClick="closeDiv()" class="button-assign">
+		<%= submit_tag("SAVE", :class => "button-assign") %>
+      <% end %>
+    </div>
+
+    <div id='editAdmin' name="" style='display:none'>
+      <h2> UBAH DATA ADMIN </h2>
+	  <%= form_tag("/admin/edit_admin", method: "post") do %>
+        <label id='judul-form' class='label-form'>Nama Admin</label>
+      	<br>
+        <input name="namaAdmin" id="namaAdmin" placeholder="" class="input-text" type="text">
+		<br>
+		<label id='judul-form' class='label-form'>NIP Admin</label>
+      	<br>
+		<input name="nipAdmin" id="nipAdmin" placeholder="" class="input-text" type="text">
+		<br>
+		<label id='judul-form' class='label-form'>Password Admin</label>
+      	<br>
+        <input name="passwordAdmin" id="passwordAdmin" placeholder="" class="input-text" type="text">
+		<br>
+		<input name="oldNipAdmin" id="oldNipAdmin" type="hidden">
+		<input value="CLOSE" type="button" onClick="closeDiv()" class="button-assign">
+		<%= submit_tag("SAVE", :class => "button-assign") %>
+      <% end %>
+    </div>
+
+  <footer>
+    <p>
+      ©2016 Informatics | School of Electrical Engineering & Informatics (SEEI) | Institut Teknologi Bandung
+    </p>
+  </footer>
+  </body>
+</html>

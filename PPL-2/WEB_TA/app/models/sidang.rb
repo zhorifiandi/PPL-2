@@ -1,0 +1,2 @@
+class Sidang < ApplicationRecord
+end

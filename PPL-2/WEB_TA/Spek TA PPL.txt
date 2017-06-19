@@ -1,0 +1,70 @@
+TA I
+	Dosbing / Dosuji
+		Pilih Mahasiswa Bimbingan
+			MOM
+				lihat listnya
+				approve
+			Lihat status mahasiswa (dosbing, dosuji, jadwal seminar, sudah bisa seminar, bimbingan berapa kali, kehadiran, nilai akhir)
+			Seminar : entri nilai bimbingan (dosbing) (bisa edit)
+		Pilih Mahasiswa Yang di Uji
+			Lihat status mahasiswa (dosbing, dosuji, jadwal seminar, sudah bisa seminar, bimbingan berapa kali, kehadiran, nilai akhir)
+			Seminar : entri nilai seminar (dosuji) (bisa edit)
+		Ajukan topik
+
+	DosTA
+		Pilih Mahasiswa
+			Lihat status mahasiswa (dosbing, dosuji, jadwal seminar, sudah bisa seminar, bimbingan berapa kali, kehadiran, nilai akhir)
+			Approval seminar
+			entri nilai akhir TA I
+		Assign topik final pembimbing dan mahasiswa
+		Assign penguji seminar
+
+	Mahasiswa 
+		Lihat status mahasiswa (dosbing, dosuji, jadwal seminar, sudah bisa seminar, bimbingan berapa kali, kehadiran, nilai akhir)
+		Ajukan topik
+		MOM
+			Lihat list MOM (ada status sudah di approve ato belum, bisa edit)
+			Tambah MOM
+
+	TU
+		Pilih mahasiswa
+			Input jadwal seminar
+			Input kehadiran, nilai tugas
+			Generate SK bimbingan
+
+TA II
+	Dosbing / Dosuji
+		Pilih Mahasiswa Bimbingan
+			MOM
+				lihat listnya
+				approve
+			Lihat status mahasiswa (dosbing, dosuji, jadwal seminar, sudah bisa seminar, bimbingan berapa kali, kehadiran, nilai akhir, sudah bisa sidang)
+			Sidang : entri nilai sidang (dosbing) (bisa edit)
+		Pilih Mahasiswa Yang di Uji
+			Lihat status mahasiswa (dosbing, dosuji, jadwal seminar, sudah bisa seminar, bimbingan berapa kali, kehadiran, nilai akhir, sudah bisa sidang)
+			Sidang : entri nilai sidang (dosuji) (bisa edit)
+
+	DosTA
+		Pilih Mahasiswa
+			Lihat status mahasiswa (dosbing, dosuji, jadwal seminar, sudah bisa seminar, bimbingan berapa kali, kehadiran, nilai akhir, sudah bisa sidang)
+			Approval seminar
+			Approval sidang
+			entri nilai akhir TA II
+		Assign penguji sidang
+
+	Mahasiswa 
+		Lihat status mahasiswa (dosbing, dosuji, jadwal seminar, sudah bisa seminar, bimbingan berapa kali, kehadiran, nilai akhir, sudah bisa sidang)
+		MOM
+			Lihat list MOM (ada status sudah di approve ato belum, bisa edit)
+			Tambah MOM
+
+	TU
+		Pilih mahasiswa
+			Input jadwal seminar
+			Input jadwal sidang
+			Input kehadiran, nilai tugas
+			Input persyaratan final (poster, draft TA)
+
+ADMIN
+	Tambah user
+	Edit user (role dll)

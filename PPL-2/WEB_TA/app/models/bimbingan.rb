@@ -1,0 +1,2 @@
+class Bimbingan < ApplicationRecord
+end

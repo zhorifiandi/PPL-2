@@ -1,0 +1,33 @@
+.mom-container{
+  margin-left: 25%;
+  width: 55%;
+  margin-bottom: 90px;
+}
+.mahasiswa-mom {
+  min-height: 100px;
+  height: auto;
+  width: 100% fixed;
+  background: #284f27;
+  margin-bottom: 10px;
+  padding: 30px;
+}
+
+.mahasiswa-mom li {
+  margin-bottom: 10px;
+  font-size: 14pt;
+}
+
+.btn-tinjau {
+  position: relative;
+  background-color: #284f27;
+  color: #fff;
+  width: auto;
+  font-size: 20px;
+  padding:10px;
+  float: right;
+}
+
+.empty-record{
+  margin-bottom: 400px;
+  color: grey;
+}

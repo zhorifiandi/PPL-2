@@ -1,0 +1,2 @@
+class DosenTum < ApplicationRecord
+end

@@ -1,0 +1,13 @@
+<% if logged_in? %>
+  <%
+    if current_user.role == 'dosen'
+      #keep
+    elsif  current_user.role == 'mahasiswa'
+      controller.redirect_to controller: 'mahasiswa', action: 'mahasiswa_ajukan_topik'
+    else #TU
+      controller.redirect_to controller: 'tu', action: 'tu_lihat_user'
+  %>
+<% end %>
+<% else %>
+  <% controller.redirect_to controller: 'sessions', action: 'new' %>
+<% end %>

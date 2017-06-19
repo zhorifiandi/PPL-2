@@ -1,0 +1,2 @@
+class Dosen < ApplicationRecord
+end

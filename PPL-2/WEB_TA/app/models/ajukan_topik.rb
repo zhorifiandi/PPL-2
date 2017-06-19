@@ -1,0 +1,2 @@
+class AjukanTopik < ApplicationRecord
+end

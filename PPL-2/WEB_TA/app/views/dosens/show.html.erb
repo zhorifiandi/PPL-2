@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nama:</strong>
+  <%= @dosen.nama %>
+</p>
+
+<p>
+  <strong>Nip:</strong>
+  <%= @dosen.nip %>
+</p>
+
+<p>
+  <strong>Lab:</strong>
+  <%= @dosen.lab %>
+</p>
+
+<p>
+  <strong>Dosenta:</strong>
+  <%= @dosen.dosenta %>
+</p>
+
+<p>
+  <strong>Dosenpembimbing:</strong>
+  <%= @dosen.dosenpembimbing %>
+</p>
+
+<p>
+  <strong>Dosenpenguji:</strong>
+  <%= @dosen.dosenpenguji %>
+</p>
+
+<%= link_to 'Edit', edit_dosen_path(@dosen) %> |
+<%= link_to 'Back', dosens_path %>

@@ -1,0 +1,2 @@
+class NilaiAkhir < ApplicationRecord
+end

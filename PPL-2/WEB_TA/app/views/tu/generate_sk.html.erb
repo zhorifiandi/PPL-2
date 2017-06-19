@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<%= logger.info("HELLO NIGHT") %>
+<html>
+  <head>
+    <!-- meta charec set -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Page Title -->
+    <title>Dosen Input Nilai Seminar TA I</title>
+    <!-- Meta Description -->
+    <meta name="description" content="Tugas Akhir dan Kerja Praktek ITB">
+    <meta name="keywords" content="TA, TA I, TA II, TA 1, TA 2, Tugas Akhir, Ajukan Topik TA, ITB, Institut Teknologi Bandung">
+    <meta name="author" content="Geraldi Dzakwan">
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'static-pages', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'tu_daftar_user', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+
+  <body id="body">
+    <!-- Fixed Navigation -->
+    <header id="navigation" class="navbar-fixed-top navbar">
+      <div class="container">
+        <div class="navbar-header">
+          <!-- responsive nav button -->
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <i class="fa fa-bars fa-2x"></i>
+          </button>
+          <!-- /responsive nav button -->
+
+          <!-- logo -->
+          <a class="navbar-brand" href="#body">
+            <h1 id="logo">
+              <img src="/img/Logo-ITB.png" height="50" width="50" alt="itb">
+            </h1>
+          </a>
+          <!-- /logo -->
+        </div>
+
+        <!-- main nav -->
+        <nav class="collapse navbar-collapse navbar-right" role="navigation">
+          <ul id="nav" class="nav navbar-nav">
+            <li><a class="current" href="/tu/tu_lihat_user">LIST USER</a></li>
+            <li><a href="/tu/tu_daftar_user">ADD USER</a></li>
+            <li><a href="/tu/tu_assign_topik">ASSIGN TOPIK</a></li>
+            <li><a href="/logout">LOGOUT</a></li>
+          </ul>
+        </nav>
+        <!-- /main nav -->
+      </div>
+    </header>
+
+    <h1> LIST DAFTAR USER </h1>
+
+	<% success = params[:success] %>
+	<% if (success != nil) %>
+		 <% if (success == '1')%>
+			<div class='success'> Your update is succeed </div>
+		 <% elsif (success == '0') %>
+			<div class='fail'> Your update is failed </div>
+		 <% elsif (success == '2') %>
+			<div class='success'> Your deletion is succeed </div>
+		 <% elsif (success == '3') %>
+			<div class='fail'> Your deletion is failed </div>
+		 <% end %>
+	<% end %>
+
+	<%= form_tag("/tu/tu_generate_sk", method: "post") do %>
+    <center>
+      <input name="nomor_sk" id="nomor_sk" placeholder="" type="text" value="Nomor SK">
+      <input name="nip_kaprodi" id="nip_kaprodi" placeholder="" type="text" value="NIP Kaprodi">
+      <input name="nim_mhs" id="nim_mhs" placeholder="" type="text" value="NIM Mahasiswa">
+      <%= submit_tag("SIMPAN", :class => "button-search") %>
+    </center>
+  <% end %>
+
+	<%= javascript_include_tag 'tu_lihat_user', 'data-turbolinks-track': 'reload' %>
+
+  <footer>
+    <p>
+      ©2016 Informatics | School of Electrical Engineering & Informatics (SEEI) | Institut Teknologi Bandung
+    </p>
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,260 @@
+// Place all the styles related to the StaticPages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@font-face {
+    font-family: 'ProximaNovaRegular';
+    src: url('/assets/Proxima Nova Regular.woff');
+}
+
+body {
+  font-family: 'ProximaNovaRegular';
+}
+
+ol, ul {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+}
+
+a {
+    color: #fff;
+
+    -webkit-transition: all .3s ease-in 0s;
+       -moz-transition: all .3s ease-in 0s;
+        -ms-transition: all .3s ease-in 0s;
+         -o-transition: all .3s ease-in 0s;
+            transition: all .3s ease-in 0s;
+}
+
+a, a:focus, a:hover {
+    text-decoration: none;
+    outline: 0;
+}
+
+a:focus, a:hover {
+    color: #6CB670;
+}
+
+#logo {
+	font-weight: normal;
+	margin: 0;
+}
+
+/*=========================================
+	Header
+==========================================*/
+
+#navigation {
+  background-color: #284f27;
+  border: 0 none;
+  margin: 0;
+
+    -webkit-transition: background-color 800ms linear;
+       -moz-transition: background-color 800ms linear;
+	    -ms-transition: background-color 800ms linear;
+         -o-transition: background-color 800ms linear;
+			transition: background-color 800ms linear;
+}
+
+.navbar-toggle i {
+	color: #fff;
+}
+
+.navbar-brand {
+  padding: 0;
+  float:left;
+  height:50px;
+}
+
+.navbar-brand h1 img {
+  position:relative;left:100%;
+}
+
+
+
+.navbar-nav li a {
+	border-top: 1px solid transparent;
+}
+
+.navbar-nav li a.current,
+.navbar-nav li a:hover {
+	background-color: #2f702e;
+	color: #fff;
+}
+
+.navbar-fixed-top, .navbar-nav li a:focus {
+	background-color: #284f27 ;
+	color: #fff;
+}
+
+/*!
+ * Bootstrap v3.3.1 (http://getbootstrap.com)
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ *//*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+ button{-webkit-appearance:button;cursor:pointer}
+ button{font-family:inherit;font-size:inherit;line-height:inherit}
+ .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+ .sr-only-focusable:active,.sr-only-focusable:focus{position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto}
+ .container{padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}
+ .collapse{display:none;visibility:hidden}
+ .collapse.in{display:block;visibility:visible}
+ .collapsing{position:relative;height:0;overflow:hidden;-webkit-transition-timing-function:ease;-o-transition-timing-function:ease;transition-timing-function:ease;-webkit-transition-duration:.35s;-o-transition-duration:.35s;transition-duration:.35s;-webkit-transition-property:height,visibility;-o-transition-property:height,visibility;transition-property:height,visibility}
+ .nav{padding-left:0;margin-bottom:0;list-style:none}
+ .nav>li{position:relative;display:block}
+ .nav>li>a{position:relative;display:block;padding:10px 15px}
+ .nav>li.disabled>a{color:#777}
+ .nav>li.disabled>a:hover,.nav>li.disabled>a:focus{color:#777;text-decoration:none;cursor:not-allowed;background-color:transparent}
+ .nav .open>a,.nav .open>a:hover,.nav .open>a:focus{background-color:#eee;border-color:#337ab7}
+ .nav .nav-divider{height:1px;margin:9px 0;overflow:hidden;background-color:#e5e5e5}
+ .nav>li>a>img{max-width:none}.nav-tabs{border-bottom:1px solid #ddd}
+ .navbar{position:relative;min-height:50px;margin-bottom:20px;border:1px solid transparent}
+ @media (min-width:768px){
+ 	.navbar{border-radius:4px}
+ }
+ @media (min-width:768px){
+ 	.navbar-header{float:left}
+ }
+ .navbar-collapse{padding-right:15px;padding-left:15px;overflow-x:visible;-webkit-overflow-scrolling:touch;border-top:1px solid transparent;-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+ .navbar-collapse.in{overflow-y:auto}
+ @media (min-width:768px){
+ 	.navbar-collapse{width:auto;border-top:0;-webkit-box-shadow:none;box-shadow:none}
+	.navbar-collapse.collapse{display:block!important;height:auto!important;padding-bottom:0;overflow:visible!important;visibility:visible!important}
+	.navbar-collapse.in{overflow-y:visible}
+	.navbar-fixed-top .navbar-collapse,.navbar-static-top .navbar-collapse,.navbar-fixed-bottom .navbar-collapse{padding-right:0;padding-left:0}
+ }
+ .navbar-fixed-top .navbar-collapse,.navbar-fixed-bottom .navbar-collapse{max-height:340px}
+
+ .container>.navbar-header,.container-fluid>.navbar-header,.container>.navbar-collapse,.container-fluid>.navbar-collapse{margin-right:-15px;margin-left:-15px}
+ @media (min-width:768px){
+ 	.container>.navbar-header,.container-fluid>.navbar-header,.container>.navbar-collapse,.container-fluid>.navbar-collapse{margin-right:0;margin-left:0}
+ }
+ .navbar-static-top{z-index:1000;border-width:0 0 1px}
+ @media (min-width:768px){
+ 	.navbar-static-top{border-radius:0}
+ }
+ .navbar-fixed-top,.navbar-fixed-bottom{position:fixed;right:0;left:0;z-index:1030}
+ @media (min-width:768px){
+ 	.navbar-fixed-top,.navbar-fixed-bottom{border-radius:0}
+ }
+ .navbar-fixed-top{top:0;border-width:0 0 1px}
+ .navbar-fixed-bottom{bottom:0;margin-bottom:0;border-width:1px 0 0}
+ .navbar-brand>img{display:block}
+ @media (min-width:768px){
+ 	.navbar>.container .navbar-brand,.navbar>.container-fluid .navbar-brand{margin-left:-15px}
+ }
+ .navbar-toggle{position:relative;float:right;padding:9px 10px;margin-top:8px;margin-right:15px;margin-bottom:8px;background-color:transparent;background-image:none;border:1px solid transparent;border-radius:4px}
+ .navbar-toggle:focus{outline:0}
+ .navbar-toggle .icon-bar{display:block;width:22px;height:2px;border-radius:1px}
+ .navbar-toggle .icon-bar+.icon-bar{margin-top:4px}
+ @media (min-width:768px){
+ 	.navbar-toggle{display:none}
+ }
+ .navbar-nav{margin:7.5px -15px}
+ .navbar-nav>li>a{padding-top:10px;padding-bottom:10px;line-height:20px}
+
+ @media (min-width:768px){
+ 	.navbar-nav{float:left;margin:0}
+ 	.navbar-nav>li{float:left}
+ 	.navbar-nav>li>a{padding-top:15px;padding-bottom:15px}
+ }
+ @media (min-width:768px){
+ .navbar-left{float:left!important}
+ .navbar-right{float:right!important;margin-right:-15px}
+ .navbar-right~.navbar-right{margin-right:0}
+ }
+
+ footer {
+  margin-top: 100px;
+  height: 100px;
+  background: #284f27;
+  padding: 30px;
+  text-align: right;
+ }
+
+ footer p {
+  color : white;
+ }
+
+ .login-input {
+   width: 100%;
+   height: 30px;
+   color: #284f27;
+   font-size: 16pt;
+ }
+
+ .login-box {
+   background: #284f27;
+ }
+
+ .box-info {
+   background: #dedede;
+   margin: 0 auto;
+   width: 50%;
+   min-height: 200px;
+   padding: 50px;
+ }
+
+ .box-info h1 {
+   margin: 0;
+   font-size: 28pt;
+ }
+
+  .box-info h2 {
+    margin: 0;
+    margin-bottom: 120px;
+    font-size: 24pt;
+  }
+
+  .box-info h2 {
+    margin: 0;
+    font-size: 20pt;
+  }
+
+  .mahasiswa-container {
+    margin: 0 auto;
+    width: 60%;
+    margin-bottom: 100px;
+  }
+
+  .box-mhs {
+    background: #d8d8d8;
+    padding: 50px;
+    margin-bottom: 10px;
+  }
+  .box-mhs h1 {
+        margin: 0;
+        margin-bottom: 20px;
+        font-size: 20pt;
+        color: #284f27;
+  }
+  .box-mhs li {
+        color: #284f27;
+  }
+
+  .save-topik {
+    background: #284f27;
+    color: #fff;
+    padding:10px;
+    border: 1px solid;
+    border-radius: 3pt;
+    width: 100px;
+    font-size: 14pt;
+  }
+
+  .save-topik:hover {
+    background: #2a6f38
+  }
+
+  .pilihan-wrapper {
+    padding: 20px;
+  }
+
+  .notice-alert {
+    margin-left: 25%;
+  	margin-top: 25px;
+  	font-size: 20px;
+  	display: block;
+  	color: #284f27;
+  }

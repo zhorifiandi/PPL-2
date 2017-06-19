@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<%= logger.info("HELLO NIGHT") %>
+<html>
+  <head>
+    <!-- meta charec set -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Page Title -->
+    <title>Dosen Input Nilai Sidang TA II</title>
+    <!-- Meta Description -->
+    <meta name="description" content="Tugas Akhir dan Kerja Praktek ITB">
+    <meta name="keywords" content="TA, TA I, TA II, TA 1, TA 2, Tugas Akhir, Ajukan Topik TA, ITB, Institut Teknologi Bandung">
+    <meta name="author" content="Geraldi Dzakwan">
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="/style/static_pages.css" rel="stylesheet" type="text/css">
+    <link href="/style/dosen-ajukan-topik.css" rel="stylesheet" type="text/css">
+    <link href="/style/dosen_nilai_seminar.css" rel="stylesheet" type="text/css">
+    <script src="/script/jquery.js" type="text/javascript"></script>
+    <script src="/script/dosen_nilai_sidang.js" type="text/javascript"></script>
+
+
+  </head>
+  <% if logged_in? %>
+    <%
+      if current_user.role == 'dosen'
+        #keep
+      elsif  current_user.role == 'mahasiswa'
+        controller.redirect_to controller: 'mahasiswa', action: 'mahasiswa_ajukan_topik'
+      else #TU
+        controller.redirect_to controller: 'tu', action: 'tu_lihat_user'
+    %>
+  <% end %>
+  <% else %>
+    <% controller.redirect_to controller: 'sessions', action: 'new' %>
+  <% end %>
+  <body id="body">
+    <!-- Fixed Navigation -->
+    <header id="navigation" class="navbar-fixed-top navbar">
+      <div class="container">
+        <div class="navbar-header">
+          <!-- responsive nav button -->
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <i class="fa fa-bars fa-2x"></i>
+          </button>
+          <!-- /responsive nav button -->
+
+          <!-- logo -->
+          <a class="navbar-brand" href="#body">
+            <h1 id="logo">
+              <img src="/img/Logo-ITB.png" height="50" width="50" alt="itb">
+            </h1>
+          </a>
+          <!-- /logo -->
+        </div>
+
+        <!-- main nav -->
+        <nav class="collapse navbar-collapse navbar-right" role="navigation">
+          <ul id="nav" class="nav navbar-nav">
+            <li><a href="/dosen_pembimbing">PILIH MODE</a></li>
+            <li><a href="bimbingan_ta2">MAHASISWA BIMBINGAN</a></li>
+            <li><a href="dosen_nilai_seminar_ta2">SEMINAR</a></li>
+            <li><a class="current" href="dosen_nilai_sidang">SIDANG</a></li>
+            <li><a href="/logout">LOGOUT</a></li>
+          </ul>
+        </nav>
+        <!-- /main nav -->
+      </div>
+    </header>
+
+    <% dosen = Dosen.find_by(nip: current_user.username)%>
+    <% if dosen != nil %>
+    <h2 style="margin-bottom: 0">Halo, <%= dosen.nama %> </h2>
+    <% end %>
+    <h1 style="margin-top: 0;"> NILAI SIDANG TA II </h1>
+
+    <input id="rolePembimbing" class="input-radio" type="radio" name="role" value="rolePembimbing" checked>
+      <label for="rolePembimbing" class="label-radio">Sebagai Dosen Pembimbing</label>
+
+    <input id="rolePenguji" class="input-radio-2" type="radio" name="role" value="rolePenguji">
+      <label for="rolePenguji" class="label-radio">Sebagai Dosen Penguji</label>
+
+    <br><br>
+    <div id='listMahasiswaPembimbing' name="" style='display:block'>
+      <table>
+        <tr>
+          <th>NIM</th>
+          <th>Nama</th>
+          <th>Topik</th>
+        </tr>
+        <%if defined?(:mahasiswa_pembimbing)%>
+        	<%if(@mahasiswa_pembimbing!=nil) %>
+        	  <% @mahasiswa_pembimbing.each do |mhsiswa| %>
+        	  	<tr id=<%= mhsiswa.nim %>  onclick="showDiv(<%= mhsiswa.nim %>,'pembimbing')" data-remote="true" class='clickable-row'>
+      			    <td><%= mhsiswa.nim %></td>
+      			    <td><%= mhsiswa.nama_mhs %></td>
+      			    <td><%= mhsiswa.topik %></td>
+      			  </tr>
+  		      <% end %>
+  		    <% end %>
+  	    <% end %>
+      </table>
+    </div>
+
+    <div id='listMahasiswaPenguji' name="" style='display:block'>
+      <table>
+        <tr>
+          <th>NIM</th>
+          <th>Nama</th>
+          <th>Topik</th>
+        </tr>
+        <%if defined?(:mahasiswa_penguji)%>
+        	<%if(@mahasiswa_penguji!=nil) %>
+        	  <% @mahasiswa_penguji.each do |mhsiswa| %>
+        	  	<tr id=<%= mhsiswa.nim %>  onclick="showDiv(<%= mhsiswa.nim %>,'penguji')" data-remote="true" class='clickable-row'>
+  			        <td><%= mhsiswa.nim %></td>
+  			        <td><%= mhsiswa.nama_mhs %></td>
+  			        <td><%= mhsiswa.topik %></td>
+  			      </tr>
+  		      <% end %>
+  		    <% end %>
+  	    <% end %>
+      </table>
+    </div>
+
+    <div id='inputNilaiSidangPenguji' name="" style='display:none'>
+      <h2 id='judul-form-penguji' class='label-form'>NILAI SIDANG MAHASISWA NIM XXXXX</h2>
+      <br>
+  	  <%= form_tag("/dosen_pembimbing/edit_nilai_sidang", method: "post") do %>
+      <table>
+        <tr>
+          <th>No</th>
+          <th>Kriteria</th>
+          <th>Nilai</th>
+        </tr>
+        <tr>
+          <td colspan="3">I. Kriteria Utama</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Kualitas solusi dan hasil Tugas Akhir, termasuk kelengkapan pencapaian target</td>
+          <td><select id="nilai_sidang1" name="nilai_sidang1" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Pemahaman materi utama Tugas Akhir </td>
+          <td><select id="nilai_sidang2" name="nilai_sidang2" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">II. Kriteria Penting</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Tulisan Laporan Tugas Akhir: Kesesuaian laporan dengan panduan penulisan:
+<br>-	Kerunutan, kejelasan, dan kelengkapan isi laporan
+<br>-	Ketepatan penggunaan ejaan, tata bahasa, dan tata tulis
+<br>-	Kerapihan dan keterbacaan tulisan dan gambar
+</td>
+          <td><select id="nilai_sidang3" name="nilai_sidang3" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">III. Kriteria Pendukung</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Presentasi: sistematika, kejelasan, ketepatan waktu
+<br>-	Kerunutan, kejelasan, dan kelengkapan isi presentasi
+<br>-	Kerapihan dan keterbacaan slides presentasi
+<br>-	Kejelasan ucapan dan ketepatan penggunaan bahasa
+<br>-	Ketepatan waktu
+<br>-	Perhatian ke hadirin
+</td>
+          <td><select id="nilai_sidang4" name="nilai_sidang4" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Kemampuan menjawab pertanyaan dengan lugas dalam tanya jawab</td>
+          <td><select id="nilai_sidang5" name="nilai_sidang5" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Pemahaman materi pendukung (diperoleh dari hasil tanya jawab)</td>
+          <td><select id="nilai_sidang6" name="nilai_sidang6" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+      </table>
+        <input name="nilai_total" id="nilai_total" placeholder="" class="input-text" type="text" readonly>
+  		<br>
+      <span class='label-form'>Keterangan :<br>
+  *) Tuliskan + untuk kriteria yang bernilai baik dan - untuk kriteria yang kurang/tidak<br>
+  baik. Perkecualian untuk kriteria 3 dan 4 yang mengikuti aturan khusus sebagaimana <br>
+  disebutkan di atas.<br>
+  **) Lingkari nilai akhir yang tepat berdasarkan pedoman penilaian akhir sebagai <br>berikut:<br>
+      </span>
+      <table>
+        <tr>
+          <th rowspan="2">Nilai</th>
+          <th colspan="3">Kriteria Bernilai Baik(+)</th>
+        </tr>
+        <tr>
+          <th>Utama</th>
+          <th>Penting</th>
+          <th>Pendukung</th>
+        </tr>
+        <tr>
+          <td>A</td>
+          <td>2</td>
+          <td>1</td>
+          <td>Minimum 2</td>
+        </tr>
+        <tr>
+          <td>AB</td>
+          <td>2</td>
+          <td>0</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>AB</td>
+          <td>2</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>B</td>
+          <td>2</td>
+          <td>0</td>
+          <td>Minimum 2</td>
+        </tr>
+        <tr>
+          <td>B</td>
+          <td>2</td>
+          <td>1</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>BC</td>
+          <td>2</td>
+          <td>Bebas</td>
+          <td>Bebas</td>
+        </tr>
+        <tr>
+          <td>C</td>
+          <td>1</td>
+          <td>Bebas</td>
+          <td>Bebas</td>
+        </tr>
+        <tr>
+          <td>D</td>
+          <td>0</td>
+          <td>Bebas</td>
+          <td>Bebas</td>
+        </tr>
+        <tr>
+          <td>E</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+      </table>
+  		<input name="nim_mahasiswa_penguji" id="nim_mahasiswa_penguji" type="hidden">
+      <input name="status_mahasiswa_penguji" id="status_mahasiswa_penguji" type="hidden">
+      <textarea id="beritaacarasidangpenguji" name="beritaacarasidangpenguji" rows="8" cols="50">
+      </textarea><input value="CLOSE" type="button" onClick="closeDiv()" class="button-submit">
+  		<%= submit_tag("SAVE", :class => "button-submit") %>
+        <% end %>
+    </div>
+
+    <div id='inputNilaiSidangPembimbing' name="" style='display:none'>
+      <h2 id='judul-form-pembimbing' class='label-form'>NILAI SIDANG MAHASISWA NIM XXXXX</h2>
+      <br>
+  	  <%= form_tag("/dosen_pembimbing/edit_nilai_sidang", method: "post") do %>
+      <table>
+        <tr>
+          <th>No</th>
+          <th>Kriteria</th>
+          <th>Nilai</th>
+        </tr>
+        <tr>
+          <td colspan="3">I. Kriteria Utama</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Kualitas solusi dan hasil Tugas Akhir, termasuk kelengkapan pencapaian target </td>
+          <td><select id="pembimbing_nilai_sidang1" name="pembimbing_nilai_sidang1" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Pemahaman materi utama Tugas Akhir </td>
+          <td><select id="pembimbing_nilai_sidang2" name="pembimbing_nilai_sidang2" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Usaha untuk mencapai hasil Tugas Akhir</td>
+          <td><select id="pembimbing_nilai_sidang3" name="pembimbing_nilai_sidang3" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">II. Kriteria Pendukung</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Tulisan Laporan Tugas Akhir: Kesesuaian laporan dengan panduan penulisan:
+<br>-	Kerunutan, kejelasan, dan kelengkapan isi laporan
+<br>-	Ketepatan penggunaan ejaan, tata bahasa, dan tata tulis
+<br>-	Kerapihan dan keterbacaan tulisan dan gambar
+</td>
+          <td><select id="pembimbing_nilai_sidang4" name="pembimbing_nilai_sidang4" style="position: relative !important;
+          z-index: 0 !important;
+          margin-left: 0% !important;
+          background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+          border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+             <option>+</option>
+             <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Komunikasi dan tanggung jawab dalam proses bimbingan</td>
+          <td><select id="pembimbing_nilai_sidang5" name="pembimbing_nilai_sidang5" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Kreativitas dan inovasi dalam menghasilkan solusi	</td>
+          <td><select id="pembimbing_nilai_sidang6" name="pembimbing_nilai_sidang6" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+      </table>
+        <input name="pembimbing_nilai_total" id="pembimbing_nilai_total" placeholder="" class="input-text" type="text" readonly>
+  		<br>
+      <span class='label-form'>Keterangan :<br>
+  *) Tuliskan + untuk kriteria yang bernilai baik dan - untuk kriteria yang kurang/tidak<br>
+  baik. Perkecualian untuk kriteria 4 yang mengikuti aturan khusus sebagaimana <br>
+  disebutkan di atas.<br>
+  **) Lingkari nilai akhir yang tepat berdasarkan pedoman penilaian akhir sebagai <br>berikut:<br>
+      </span>
+      <table>
+        <tr>
+          <th rowspan="2">Nilai</th>
+          <th colspan="2">Kriteria Bernilai Baik(+)</th>
+        </tr>
+        <tr>
+          <th>Utama</th>
+          <th>Pendukung</th>
+        </tr>
+        <tr>
+          <td>A</td>
+          <td>3</td>
+          <td>Minimum 2</td>
+        </tr>
+        <tr>
+          <td>AB</td>
+          <td>2</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>AB</td>
+          <td>3</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>B</td>
+          <td>2</td>
+          <td>Minimum 2</td>
+        </tr>
+        <tr>
+          <td>B</td>
+          <td>3</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>BC</td>
+          <td>2</td>
+          <td>Bebas</td>
+        </tr>
+        <tr>
+          <td>C</td>
+          <td>1</td>
+          <td>Bebas</td>
+        </tr>
+        <tr>
+          <td>D</td>
+          <td>0</td>
+          <td>Bebas</td>
+        </tr>
+        <tr>
+          <td>E</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+      </table>
+  		<input name="nim_mahasiswa_pembimbing" id="nim_mahasiswa_pembimbing" type="hidden">
+      <input name="status_mahasiswa_pembimbing" id="status_mahasiswa_pembimbing" type="hidden">
+      <label class='label-form'>BERITA ACARA</label>
+      <br>
+      <textarea id="beritaacarasidangpembimbing" name="beritaacarasidangpembimbing" rows="8" cols="50">
+      </textarea>
+      <input value="CLOSE" type="button" onClick="closeDiv()" class="button-submit">
+  		<%= submit_tag("SAVE", :class => "button-submit") %>
+      <% end %>
+    </div>
+
+  <footer>
+    <p>
+      ©2016 Informatics | School of Electrical Engineering & Informatics (SEEI) | Institut Teknologi Bandung
+    </p>
+  </footer>
+  </body>
+</html>

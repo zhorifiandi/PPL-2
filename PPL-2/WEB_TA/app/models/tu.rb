@@ -1,0 +1,2 @@
+class Tu < ApplicationRecord
+end

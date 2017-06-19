@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- meta charec set -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Page Title -->
+    <title>Ajukan Topik TA</title>
+  <!-- Meta Description -->
+    <meta name="description" content="Tugas Akhir dan Kerja Praktek ITB">
+    <meta name="keywords" content="TA, TA I, TA II, TA 1, TA 2, KP, Tugas Akhir, Kerja Praktek, ITB, Institut Teknologi Bandung">
+    <meta name="author" content="Ari Pratama Zhorifiandi">
+  <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%= csrf_meta_tags %>
+
+    <link href="/style/static_pages.css" rel="stylesheet" type="text/css">
+
+    <link href="/style/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="/style/index.css" rel="stylesheet" type="text/css">
+    <script src="/script/jquery.js" type="text/javascript"></script>
+    <script src="/script/bootstrap.js" type="text/javascript"></script>
+    <script src="/script/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/script/login.js" type="text/javascript"></script>
+
+
+  </head>
+  <% if logged_in? %>
+    <%
+    if current_user.role == 'mahasiswa'
+      controller.redirect_to controller: 'mahasiswa', action: 'ajukan_bimbingan'
+    elsif  current_user.role == 'dosen'
+      controller.redirect_to controller: 'dosen_pembimbing', action: 'bimbingan'
+    elsif current_user.role == 'tu'
+      controller.redirect_to controller: 'tu', action: 'mahasiswa'
+    else
+      controller.redirect_to controller: 'admin', action: 'lihat_user'
+    %>
+  <% end %>
+  <% end %>
+  <body id="body">
+    <!-- Fixed Navigation -->
+    <header id="navigation" class="navbar-fixed-top navbar">
+      <div class="container">
+        <div class="navbar-header">
+
+          <!-- logo -->
+              <img class="logo-itb" src="/img/Logo-ITB.png" alt="itb">
+          <!-- /logo -->
+        </div>
+
+        <!-- main nav -->
+        <nav class=" navbar-right" role="navigation">
+          <ul class="nav navbar-nav nav-login">
+          <script>
+				$(document).ready(function(){
+				  $('#loginpop').popover({
+				    html : true,
+				    title: function() {
+				      return $('#popover_title_wrapper').html();
+				    },
+				    content: function() {
+				      return $('#popover_content_wrapper').html();
+				    }
+				  });
+				});
+				</script>
+            <li id="loginpop" data-toggle="popover" data-placement="bottom">LOGIN</li>
+            <div id="popover_title_wrapper" style="display: none;">
+        			  <div><p style="color: black;">Login</p></div>
+        			</div>
+              <div id="popover_content_wrapper" style="display: none;">
+                <!-- <form accept-charset="UTF-8" action="/login" method="post">
+                  <input id="session_username" name="session[username]" placeholder="Masukan Username" class="input-text"  style="width: 200px; margin: 0; margin-bottom: 10pt;" type="text">
+                  <input id="session_password" name="session[password]" placeholder="Masukan Password" class="input-text"  style="width: 200px; margin: 0;" type="password">
+                  <button type="submit" class="button-submit" style="width: 100px">
+                    SUBMIT
+                  </button>
+                </form> -->
+                <div class="container-fluid" style="width:100%; background: #f9f9f9">
+                <%= form_for(:session, url: login_path) do |f| %>
+                  <%= f.label :username, style: "color: #284f27" %>
+                  <%= f.text_field :username, class:"login-input"  %>
+
+                  <%= f.label :password, style: "color: #284f27" %>
+                  <%= f.password_field :password, class:"login-input" %>
+
+                  <%= f.submit "LOGIN", class: "button-submit" , style:"width: 80px; height: 40px; margin-top: 10px; margin-bottom: 0; font-size: 12pt; padding: 0 auto;"%>
+                <% end %>
+              </div>
+              </div>
+
+             <!--  <div class="popover-title">
+                <h3>Login</h3>
+              </div>
+              <div class="popover-content">
+                <p>Here</p>
+              </div> -->
+            </ul>
+          </nav>
+          <!-- /main nav -->
+
+        </div>
+
+
+    </header>
+    <section id="banner">
+
+        <div class="content">
+            <% flash.each do |key, value| %>
+              <%= content_tag(:p, value, :class => "alert alert-danger", :style =>" margin-top: 200px; margin-bottom: -250px;")%>
+            <% end %>
+            <h1 style=" margin-top: 250px;"><strong>SISTEM</strong></h1>
+            <h2>PENGELOLAAN</h2>
+            <h2>TUGAS AKHIR</h2>
+        </div>
+
+    </section>
+
+
+    <section>
+      <h1>TENTANG APLIKASI INI</h1>
+      <p>Merupakan aplikasi web yang dapat digunakan oleh dosen, mahasiswa, dan tata usaha dalam rangka mengelola tugas akhir mahasiswa.</p>
+    </section>
+    <footer>
+    <p>
+      ©2016 Informatics | School of Electrical Engineering & Informatics (SEEI) | Institut Teknologi Bandung
+    </p>
+    </footer>
+  </body>
+</html>

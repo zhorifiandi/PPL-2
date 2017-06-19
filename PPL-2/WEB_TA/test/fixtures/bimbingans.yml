@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  dosen_pembimbing: MyString
+  tanggal: 2017-04-10
+  hasildiskusi: MyText
+  rencanalanjut: MyText
+  tanggalrencana: 2017-04-10
+  mahasiswa: MyString
+
+two:
+  dosen_pembimbing: MyString
+  tanggal: 2017-04-10
+  hasildiskusi: MyText
+  rencanalanjut: MyText
+  tanggalrencana: 2017-04-10
+  mahasiswa: MyString

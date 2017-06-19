@@ -1,0 +1,22 @@
+// Registrasi User
+.input-radio {
+	display: inline-block;
+	margin-left: 25%;
+	width:24px;
+	height:24px;
+	position:relative;
+	top:6px;
+}
+
+.input-radio-2 {
+	display: inline-block;
+	width:24px;
+	height:24px;
+	position:relative;
+	top:6px;
+}
+
+.label-radio {
+	color: #284f27;
+}
+// Registrasi User

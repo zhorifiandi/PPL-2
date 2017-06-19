@@ -1,0 +1,15 @@
+d | username | role      | password_digest                                              | id_on_role | created_at          | updated_at          |
+
++----+----------+-----------+--------------------------------------------------------------+------------+---------------------+---------------------+
+
+|  1 | 000000   | tu        | $2a$10$QTbIQYPJydDWBuzHeOb5xud81C/3NxJ.FJOLlJZASLUdDhj3Bzigy |          1 | 2017-04-24 14:39:59 | 2017-04-24 14:39:59 |
+
+|  3 | 1234567890  | dosen     | $2a$10$szqVaI6gfCpWvgSBpcJn3Oy6D9UqHzc8VLjU7qUZgGFuP2c.EX58S |          1 | 2017-04-24 14:52:58 | 2017-04-24 14:52:58 |
+
+|  4 | 1234567891  | dosen     | $2a$10$cNYFX4pqLjx3Mky9J5aibOpSdiLNL0A8iOPY1Q3DNENVo434cbBny |          2 | 2017-04-24 15:44:45 | 2017-04-24 15:44:45 |
+
+|  5 | 13514062 | tu        | $2a$10$nstMP0YAFTm4K4OXfAC0fuWHK/P8jAeX.gZ1d7aa5E0sgAPZjtKlO |          4 | 2017-04-26 08:08:05 | 2017-04-26 08:08:05 |
+
+|  6 | 13514039 | mahasiswa | $2a$10$uFKdTQKPe./DAD/0jbgADexfYiGpmKTKB4tNZvU4sWUiIWQnPu2J. |          5 | 2017-04-26 08:25:14 | 2017-04-26 08:25:14 |
+
+|  7 | 13514049 | mahasiswa | $2a$10$9NEqR1SD0BsQXV.9RPQsceRFZNS.Yuqj0zSBuiFa07xky5m92QxS2 |          7 | 2017-04-27 01:26:51 | 2017-04-27 01:26:51 |

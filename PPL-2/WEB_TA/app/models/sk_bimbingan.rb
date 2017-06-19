@@ -1,0 +1,2 @@
+class SkBimbingan < ApplicationRecord
+end

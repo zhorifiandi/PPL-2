@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<%= logger.info("HELLO NIGHT") %>
+<html>
+  <head>
+    <!-- meta charec set -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Page Title -->
+    <title>Dosen Ajukan Topik TA</title>
+    <!-- Meta Description -->
+    <meta name="description" content="Tugas Akhir dan Kerja Praktek ITB">
+    <meta name="keywords" content="TA, TA I, TA II, TA 1, TA 2, Tugas Akhir, Ajukan Topik TA, ITB, Institut Teknologi Bandung">
+    <meta name="author" content="Geraldi Dzakwan">
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tags %>
+
+    <link href="/style/static_pages.css" rel="stylesheet" type="text/css">
+    <link href="/style/dosen-ajukan-topik.css" rel="stylesheet" type="text/css">
+    <link href="/style/ajukan-topik.css" rel="stylesheet" type="text/css">
+    <script src="/script/jquery.js" type="text/javascript"></script>
+    <script src="/script/ajukan-topik.js" type="text/javascript"></script>
+
+
+  </head>
+  <% if logged_in? %>
+    <%
+      if current_user.role == 'dosen'
+        #keep
+      elsif  current_user.role == 'mahasiswa'
+        controller.redirect_to controller: 'mahasiswa', action: 'mahasiswa_ajukan_topik'
+      else #TU
+        controller.redirect_to controller: 'tu', action: 'tu_lihat_user'
+    %>
+  <% end %>
+  <% else %>
+    <% controller.redirect_to controller: 'sessions', action: 'new' %>
+  <% end %>
+  <body id="body">
+    <!-- Fixed Navigation -->
+    <header id="navigation" class="navbar-fixed-top navbar">
+      <div class="container">
+        <div class="navbar-header">
+          <!-- responsive nav button -->
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <i class="fa fa-bars fa-2x"></i>
+          </button>
+          <!-- /responsive nav button -->
+
+          <!-- logo -->
+          <a class="navbar-brand" href="#body">
+            <h1 id="logo">
+              <img src="/img/Logo-ITB.png" height="50" width="50" alt="itb">
+            </h1>
+          </a>
+          <!-- /logo -->
+        </div>
+
+        <!-- main nav -->
+        <nav class="collapse navbar-collapse navbar-right" role="navigation">
+          <ul id="nav" class="nav navbar-nav">
+            <li><a href="/dosen_pembimbing">PILIH MODE</a></li>
+            <li><a class="current" href="#topik">AJUKAN TOPIK</a></li>
+            <li><a href="mahasiswa_ajukan_topik">PENGISIAN PRIORITAS</a></li>
+            <li><a href="bimbingan">MAHASISWA BIMBINGAN</a></li>
+            <li><a href="dosen_nilai_seminar">SEMINAR</a></li>
+            <li><a href="/logout">LOGOUT</a></li>
+          </ul>
+        </nav>
+        <!-- /main nav -->
+      </div>
+    </header>
+
+    <% dosen = Dosen.find_by(nip: current_user.username)%>
+    <% if dosen != nil %>
+    <h2 style="margin-bottom: 0">Halo, <%= dosen.nama %> </h2>
+    <% end %>
+    <h1 style="margin-top: 0;"> AJUKAN TOPIK </h1>
+
+    <% success = params[:success] %>
+    <% topik = params[:topik] %>
+    <% kategori = params[:kategori] %>
+    <% if (success != nil)
+  		 if (success == '1')%>
+  			<div class='success'> Penambahan topik : <br>
+          Topik : <%= topik %> <br>
+          Kategori : <%=kategori %> <br>
+          telah berhasil! </div>
+  		 <% elsif (success == '2') %>
+  			<div class='fail'> Penambahan topik : <br>
+          Topik : <%= topik %> <br>
+          Kategori : <%= kategori %> <br>
+          telah gagal! </div>
+  		 <% else %>
+         <div class='success'> Penghapusan topik : <br>
+           Topik : <%= topik %> <br>
+           telah berhasil! </div>
+       <% end %>
+  	<% end %>
+    <%= form_tag("/dosen_pembimbing/save_topik", method: "post") do %>
+      <label class='label-form'>JUDUL TOPIK</label>
+      <br>
+      <input name="new_topic" required placeholder="Masukan Judul Topik" class="input-text" type="text">
+      <br>
+      <label class='label-form'>KATEGORI TOPIK</label>
+      <br>
+      <select name='topic_category' required="">
+        <%if(@kategoriList!=nil) %>
+          <%@kategoriList.each do |elem| %>
+            <option><%=elem.nama%></option>
+          <%end%>
+        <%end%>
+      </select>
+      <br>
+      <%= submit_tag("TAMBAHKAN", :class => "button-tambah-ajukan") %>
+    <% end %>
+
+    <h2> DAFTAR TOPIK YANG TELAH DIAJUKAN </h2>
+    <%if defined?(:topikArray)%>
+      <%if(@topikArray!=nil) %>
+        <%@topikArray.each do |elem| %>
+          <%= form_tag("/dosen_pembimbing/hapus_topik", method: "post") do %>
+              <input name="this_topic" placeholder='<%=elem%>' value='<%=elem%>' class="input-text" type="text" readonly>
+              <%= submit_tag("HAPUS", :class => "button-hapus-ajukan") %>
+          <% end %>
+          <%= form_tag("/dosen_pembimbing/set_topic_availability", method: "post") do %>
+            <input name="this_topic" placeholder='<%=elem%>' value='<%=elem%>' class="input-text" type="hidden">
+            <% at = AjukanTopik.where('nip = ? and topik = ?',current_user.username,elem).take
+            if(at.availability == true) %>
+              <%= submit_tag("TERSEDIA", :class => "button-availibilty-ajukan") %>
+            <% else %>
+              <%= submit_tag("TIDAK TERSEDIA", :class => "button-availibilty-ajukan") %>
+            <% end %>
+            <br>
+            <br>
+          <%end%>
+        <%end%>
+      <%end%>
+    <%end%>
+
+
+	<%= javascript_include_tag 'dosen-ajukan-topik', 'data-turbolinks-track': 'reload' %>
+
+  <footer>
+    <p>
+      ©2016 Informatics | School of Electrical Engineering & Informatics (SEEI) | Institut Teknologi Bandung
+    </p>
+  </footer>
+  </body>
+</html>

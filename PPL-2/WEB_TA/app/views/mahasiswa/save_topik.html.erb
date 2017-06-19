@@ -1,0 +1,23 @@
+<p> This is your saved topic </p>
+<br>
+
+<% for i in 0..@arrayTopic.length %>
+  <p> <%=@arrayTopic[i]%> </p>
+<% end %>
+<br>
+
+<% for j in 0..@arrayKategori.length %>
+  <p> <%=@arrayKategori[j]%> </p>
+<% end %>
+<br>
+
+<% for k in 0..@arrayDosbing.length %>
+  <p> <%=@arrayDosbing[k]%> </p>
+<% end %>
+<br>
+
+<%= form_tag("/mahasiswa/delete_topik", method: "post") do %>
+  <center>
+    <%= submit_tag("RESUBMIT TOPIC") %>
+  </center>
+<%end%>

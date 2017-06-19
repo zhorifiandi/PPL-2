@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<%= logger.info("HELLO NIGHT") %>
+<html>
+  <head>
+    <!-- meta charec set -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Page Title -->
+    <title>Dosen Input Nilai Seminar TA II</title>
+    <!-- Meta Description -->
+    <meta name="description" content="Tugas Akhir dan Kerja Praktek ITB">
+    <meta name="keywords" content="TA, TA I, TA II, TA 1, TA 2, Tugas Akhir, Ajukan Topik TA, ITB, Institut Teknologi Bandung">
+    <meta name="author" content="Geraldi Dzakwan">
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="/style/static_pages.css" rel="stylesheet" type="text/css">
+    <link href="/style/dosen-ajukan-topik.css" rel="stylesheet" type="text/css">
+    <link href="/style/dosen_nilai_seminar.css" rel="stylesheet" type="text/css">
+    <script src="/script/jquery.js" type="text/javascript"></script>
+    <script src="/script/dosen_nilai_seminar_ta2.js" type="text/javascript"></script>
+
+
+  </head>
+  <% if logged_in? %>
+    <%
+      if current_user.role == 'dosen'
+        #keep
+      elsif  current_user.role == 'mahasiswa'
+        controller.redirect_to controller: 'mahasiswa', action: 'mahasiswa_ajukan_topik'
+      else #TU
+        controller.redirect_to controller: 'tu', action: 'tu_lihat_user'
+    %>
+  <% end %>
+  <% else %>
+    <% controller.redirect_to controller: 'sessions', action: 'new' %>
+  <% end %>
+  <body id="body">
+    <!-- Fixed Navigation -->
+    <header id="navigation" class="navbar-fixed-top navbar">
+      <div class="container">
+        <div class="navbar-header">
+          <!-- responsive nav button -->
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <i class="fa fa-bars fa-2x"></i>
+          </button>
+          <!-- /responsive nav button -->
+
+          <!-- logo -->
+          <a class="navbar-brand" href="#body">
+            <h1 id="logo">
+              <img src="/img/Logo-ITB.png" height="50" width="50" alt="itb">
+            </h1>
+          </a>
+          <!-- /logo -->
+        </div>
+
+        <!-- main nav -->
+        <nav class="collapse navbar-collapse navbar-right" role="navigation">
+          <ul id="nav" class="nav navbar-nav">
+            <li><a href="/dosen_pembimbing">PILIH MODE</a></li>
+            <li><a href="bimbingan_ta2">MAHASISWA BIMBINGAN</a></li>
+            <li><a class="current" href="dosen_nilai_seminar_ta2">SEMINAR</a></li>
+            <li><a href="dosen_nilai_sidang">SIDANG</a></li>
+            <li><a href="/logout">LOGOUT</a></li>
+          </ul>
+        </nav>
+        <!-- /main nav -->
+      </div>
+    </header>
+
+    <% dosen = Dosen.find_by(nip: current_user.username)%>
+    <% if dosen != nil %>
+    <h2 style="margin-bottom: 0">Halo, <%= dosen.nama %> </h2>
+    <% end %>
+    <h1 style="margin-top: 0;"> NILAI SEMINAR TA II </h1>
+
+    <br><br>
+    <div id='listMahasiswaPembimbing' name="" style='display:block'>
+      <table>
+        <tr>
+          <th>NIM</th>
+          <th>Nama</th>
+          <th>Topik</th>
+        </tr>
+        <%if defined?(:mahasiswa_pembimbing)%>
+        	<%if(@mahasiswa_pembimbing!=nil) %>
+        	  <% @mahasiswa_pembimbing.each do |mhsiswa| %>
+        	  	<tr id=<%= mhsiswa.nim %>  onclick="showDiv(<%= mhsiswa.nim %>,'pembimbing')" data-remote="true" class='clickable-row'>
+      			    <td><%= mhsiswa.nim %></td>
+      			    <td><%= mhsiswa.nama_mhs %></td>
+      			    <td><%= mhsiswa.topik %></td>
+      			  </tr>
+  		      <% end %>
+  		    <% end %>
+  	    <% end %>
+      </table>
+    </div>
+
+    <div id='inputNilaiSeminarTA2Pembimbing' name="" style='display:none'>
+      <h2 id='judul-form-pembimbing' class='label-form'>NILAI SEMINAR TA II MAHASISWA NIM XXXXX</h2>
+      <br>
+  	  <%= form_tag("/dosen_pembimbing/edit_nilai_seminar_ta2", method: "post") do %>
+      <table>
+        <tr>
+          <th>No</th>
+          <th>Kriteria</th>
+          <th>Nilai</th>
+        </tr>
+        <tr>
+          <td colspan="3">I. Kriteria Utama</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Pendefinisian permasalahan Tugas Akhir : ketepatan scope masalah dan kejelasan tujuan Tugas Akhir</td>
+          <td><select id="pembimbing_nilai_seminar_ta21" name="pembimbing_nilai_seminar_ta21" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Pemahaman materi utama Tugas Akhir: hasil studi literatur, deskripsi dan pengembangan solusi</td>
+          <td><select id="pembimbing_nilai_seminar_ta22" name="pembimbing_nilai_seminar_ta22" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Pencapaian target pengerjaan deliverables Tugas Akhir (Laporan Tugas Akhir, produk (jika ada)) : minimum 75% sudah tercapai</td>
+          <td><select id="pembimbing_nilai_seminar_ta23" name="pembimbing_nilai_seminar_ta23" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">II. Kriteria Pendukung</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Tulisan Laporan Tugas Akhir I: Kesesuaian laporan dengan panduan penulisan:
+<br>-	Kerunutan, kejelasan, dan kelengkapan isi laporan
+<br>-	Ketepatan penggunaan ejaan, tata bahasa, dan tata tulis
+<br>-	Kerapihan dan keterbacaan tulisan dan gambar
+</td>
+          <td><select id="pembimbing_nilai_seminar_ta24" name="pembimbing_nilai_seminar_ta24" style="position: relative !important;
+          z-index: 0 !important;
+          margin-left: 0% !important;
+          background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+          border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+             <option>+</option>
+             <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Presentasi: sistematika, kejelasan, ketepatan waktu
+<br>-	Kerunutan, kejelasan, dan kelengkapan isi presentasi
+<br>-	Kerapihan dan keterbacaan slides presentasi
+<br>-	Kejelasan ucapan dan ketepatan penggunaan bahasa
+<br>-	Ketepatan waktu
+<br>-	Perhatian ke hadirin
+</td>
+          <td><select id="pembimbing_nilai_seminar_ta25" name="pembimbing_nilai_seminar_ta25" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Kemampuan menjawab pertanyaan dengan lugas dalam tanya jawab</td>
+          <td><select id="pembimbing_nilai_seminar_ta26" name="pembimbing_nilai_seminar_ta26" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Pemahaman materi-materi pendukung TA (didapatkan dari tanya jawab)</td>
+          <td><select id="pembimbing_nilai_seminar_ta27" name="pembimbing_nilai_seminar_ta27" style="position: relative !important;
+        	z-index: 0 !important;
+        	margin-left: 0% !important;
+        	background-color: #284f27;
+          color: #fff;
+          max-height: 250px;
+        	border: 0 !important ;
+          width: 100% !important ;
+          font-size: 16px;">
+               <option>+</option>
+               <option>-</option>
+              </select>
+          </td>
+        </tr>
+      </table>
+        <input name="pembimbing_nilai_total" id="pembimbing_nilai_total" placeholder="" class="input-text" type="text" readonly>
+  		<br>
+      <span class='label-form'>Keterangan:
+<br>*) Tuliskan ‘+’ untuk kriteria yang bernilai baik dan ‘-‘ untuk kriteria yang kurang/tidak <br>
+baik
+<br>**) Coret yang tidak perlu. Mahasiswa dinyatakan siap melaksanakan sidang jika<br>
+semua kriteria utama dipenuhi oleh mahasiswa. Mahasiswa yang dinyatakan belum<br>
+siap sidang harus melakukan seminar ulang. Sebagai informasi, salah satu syarat<br>
+sidang adalah sudah seminar TA II dengan hasil siap dilanjutkan ke sidang.
+      </span>
+  		<input name="nim_mahasiswa_pembimbing" id="nim_mahasiswa_pembimbing" type="hidden">
+      <input name="status_mahasiswa_pembimbing" id="status_mahasiswa_pembimbing" type="hidden">
+      <label class='label-form'>BERITA ACARA</label>
+      <br>
+      <textarea id="beritaacaraseminar2pembimbing" name="beritaacaraseminar2pembimbing" rows="8" cols="50">
+      </textarea>
+      <input value="CLOSE" type="button" onClick="closeDiv()" class="button-submit">
+  		<%= submit_tag("SAVE", :class => "button-submit") %>
+      <% end %>
+    </div>
+
+  <footer>
+    <p>
+      ©2016 Informatics | School of Electrical Engineering & Informatics (SEEI) | Institut Teknologi Bandung
+    </p>
+  </footer>
+  </body>
+</html>
